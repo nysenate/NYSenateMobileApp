@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+<id>gov.nysenate.mobile.iphone</id>
+<name>NYSenate</name>
+<version>1.0.1</version>
+<publisher>NY Senate CIO Team</publisher>
+<url>http://nysenate.gov</url>
+<description>NY Senate Mobile</description>
+<copyright>GPL 3.0 and Creative Commons - 2010 by nysenate cio</copyright>
+<icon>appicon.png</icon>
+    <persistent-wifi>true</persistent-wifi>
+    <prerendered-icon>false</prerendered-icon>
+    <statusbar-style>default</statusbar-style>
+    <statusbar-hidden>false</statusbar-hidden>
+    <analytics>false</analytics>
+<guid>bfc8ae80-bd26-4099-8ff0-b6b6ed38b2a0</guid>
+</ti:app>
