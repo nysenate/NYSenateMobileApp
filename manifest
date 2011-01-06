@@ -1,8 +1,8 @@
 #appname: NYSenate
-#publisher: NY Senate CIO Team
-#url: http://nysenate.gov
+#publisher: nathan
+#url: http://nysenate.gov/mobile
 #image: appicon.png
-#appid: gov.nysenate.mobile
-#desc: NY Senate Mobile
+#appid: gov.nysenate.mobile.iphone
+#desc: undefined
 #type: mobile
-#guid: bfc8ae80-bd26-4099-8ff0-b6b6ed38b2a0
+#guid: 4d925d67-dd16-4c1c-b1e4-d020ca037f3a
