@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
 <id>gov.nysenate.mobile.iphone</id>
 <name>NYSenate</name>
-<version>1.11.2</version>
+<version>1.11.4</version>
 <publisher>New York State Senate</publisher>
 <url>http://nysenate.gov/mobile</url>
 <description>NYSenate Mobile</description>
@@ -30,7 +30,7 @@
 		</orientations>
 	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
-		<manifest android:versionCode="9" android:versionName="1.11.2" package="gov.nysenate.mobile.iphone" xmlns:android="http://schemas.android.com/apk/res/android">
+		<manifest android:versionCode="12" android:versionName="1.11.4" package="gov.nysenate.mobile.iphone" xmlns:android="http://schemas.android.com/apk/res/android">
         <supports-screens 
             android:smallScreens="true"
             android:normalScreens="true"

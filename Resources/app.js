@@ -64,7 +64,7 @@ winSenators = Titanium.UI.createWindow({
 		url:'views/senators.js',
 		barColor:DEFAULT_BAR_COLOR,
 		backgroundImage:'img/bg/Default.png',
-		orientationModes:[Titanium.UI.PORTRAIT]
+	orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT]
 });
 
 
@@ -133,7 +133,16 @@ if (!hadWelcome)
 	{
 		if (e.index == 0)
 		{
-			tabGroup.setActiveTab(2);
+		//	tabGroup.setActiveTab(2);
+			var winSearch = Titanium.UI.createWindow({
+				url:'views/findsenator.js',
+				title:'Senator Search',
+				barColor:DEFAULT_BAR_COLOR,
+				backgroundImage:'img/bg/Default.png'
+
+			});
+			tabHome.open(winSearch,{animated:true});
+
 		}
 		
 		Titanium.App.Properties.setString("welcome","done");
