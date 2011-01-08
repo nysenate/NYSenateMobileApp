@@ -282,7 +282,7 @@ function getCachedFile (cacheUrl)
 			
 			if (f)
 			{
-				Ti.API.debug('found cached file: ' + f.nativePath);
+			//	Ti.API.debug('found cached file: ' + f.nativePath);
 				return f.read();
 			}
 			else

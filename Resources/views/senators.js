@@ -168,21 +168,31 @@ function parseSenatorResponse (responseText)
 	
 	for (i = 0; i < senatorItems.length; i++)
 	 {
-	 
+	 	
+	 	
 	 	var imageUrl = senatorItems[i].senator.imageUrl;
 	 	
 	 	var idx = imageUrl.lastIndexOf("/");
 	 	imageUrl = imageUrl.substring(idx+1);
-	 	senatorItems[i].senator.imageFileName = imageUrl;
-	 	senatorItems[i].senator.imageUrl = SENATOR_THUMB_BASE + escape(imageUrl);
+	 	
+		 senatorItems[i].senator.imageFileName = imageUrl;
+	
+		senatorItems[i].senator.imageUrl = "../img/senators/" + escape(senatorItems[i].senator.imageFileName);
+
+		if (senatorItems[i].senator.key == "lanza")
+		{
+					senatorItems[i].senator.imageUrl = "../img/senators/" + senatorItems[i].senator.key + "-" + escape(senatorItems[i].senator.imageFileName);
+		}
+		
+		Ti.API.debug(senatorItems[i].senator.imageUrl);
+		
+	 	//senatorItems[i].senator.imageUrl = SENATOR_THUMB_BASE + escape(imageUrl);
 		senatorItems[i].senator.imageUrlLarge = SENATOR_FULL_BASE + escape(imageUrl);
 
 		senatorItems[i].senator.district = senatorItems[i].senator.district.split(' ')[3];
-	
-		
-	//	Ti.API.debug("senator " + i + ": " + 	senatorItems[i].senator.name);
-		senatorRows[i] = loadSenatorRow (i, senatorItems[i].senator.name, senatorItems[i].senator.district, "../img/senators/" + escape(senatorItems[i].senator.imageFileName));
-		
+		senatorRows[i] = loadSenatorRow (i, senatorItems[i].senator.name, senatorItems[i].senator.district, senatorItems[i].senator.imageUrl);
+
+		//senatorView.appendRow(senatorRows[i]);
 		
 	}
 
@@ -195,7 +205,12 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 	
 	var rowHeight = 70;
 			
-	var row = Ti.UI.createTableViewRow({height:rowHeight});
+	var row = Ti.UI.createTableViewRow({
+		height:rowHeight,
+		color:"#000000",
+		font:{fontSize:18}
+	});
+	
 	
 	var labelTitle = Ti.UI.createLabel({
 		text:name,
@@ -219,8 +234,20 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 		row.add(labelSummary);
 	}
 	
+	//Ti.API.debug("loading image: " + thumbnail);
+		var img = Ti.UI.createImageView({
+			image:thumbnail,
+			top:0,
+			left:0,
+			width:55,
+			height:rowHeight
+		});
+		
+		row.add(img);
+			
+			
 	/*
-	var cachedImage = null;//getCachedFile(thumbnail);
+	var cachedImage = getCachedFile(thumbnail);
 				
 	if (!cachedImage)
 	{
@@ -231,29 +258,39 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 			Ti.API.debug("got cache file callback for: " + fileUrl);
 
 			var img = Ti.UI.createImageView({
-				url:savedFile.read(),
+				image:savedFile.read(),
+				top:0,
 				left:0,
 				width:55,
 				height:rowHeight
 			});
 		
 			row.add(img);
-			senatorView.updateRow(i,row);
+			
+			
+			//senatorRows[i].leftImage = savedFile.read();
+			//senatorView.updateRow(i,row);
 			
 		});
 	}
 	else
-	{*/
+	{
 		//Ti.API.debug("loading image: " + thumbnail);
-		var senatorImg = Ti.UI.createImageView({
-			image:thumbnail,
+		var img = Ti.UI.createImageView({
+			image:cachedImage,
+			top:0,
 			left:0,
 			width:55,
 			height:rowHeight
 		});
 		
-		row.add(senatorImg);
-	//}
+		row.add(img);
+			
+		//row.leftImage = cachedImage;
+		//senatorView.updateRow(i,row);
+	}*/
+	
+	
 		
 	row.hasDetail = true;
 	

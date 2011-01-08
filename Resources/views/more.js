@@ -5,7 +5,7 @@ var data = [
 	{title:'Video Search', summary:'Access to the YouTube Video Archive', hasDetail:true, color:"#000000", ilink:'../inc/youtube.js', channel:'NYSenate'},
 	{title:'About the Senate', summary:'From the NYSenate.gov Website', hasDetail:true,  color:"#000000",link:'http://www.nysenate.gov/about-us'},
 	{title:'Knowledge Base', summary:'Frequently Asked Questions and more', hasDetail:true,  color:"#000000",link:'http://www.nysenate.gov/frequently-asked-questions'},
-	{title:'FOIL Request', summary:'Request Senate Data', hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/foil_request'},
+//	{title:'FOIL Request', summary:'Request Senate Data', hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/foil_request'},
 //	{title:'Senate Reports', hasDetail:true,  color:"#000000",link:'http://www.nysenate.gov/reports'},
 	{title:'Visiting the Capitol', summary:'Directions and Maps', hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/node/76'},
 	{title:'Senate Rules', summary:'The Rules of Order for the NY State Senate', hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/rules'},
