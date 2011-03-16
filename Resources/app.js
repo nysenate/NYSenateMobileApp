@@ -2,12 +2,10 @@ Ti.include("globals.js");
 
 
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
-Titanium.UI.setBackgroundColor('#000');
+Titanium.UI.setBackgroundColor('#ffffff');
 
 // create tab group
-var tabGroup = Titanium.UI.createTabGroup({
-		backgroundColor:DEFAULT_BAR_COLOR
-	});
+var tabGroup = Titanium.UI.createTabGroup({});
 
 //
 // create base UI tab and root window
@@ -16,7 +14,7 @@ var winHome;
 
 winHome = Titanium.UI.createWindow({  
     title:'New York State Senate',
-	url:'views/homeslider.js',
+	url:'views/homemenu.js',
 	//url:'views/window/newsroom.js',
     barColor:DEFAULT_BAR_COLOR,
 	backgroundImage:"img/bg/black.png",

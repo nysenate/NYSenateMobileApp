@@ -14,9 +14,7 @@ data.push({title:'By Committee', summary:'Browse Legislation by Committee', link
 	
 // create table view
 var tableview = Titanium.UI.createTableView({
-	backgroundColor:"#ffffff",
-	opacity:.8,
-	color:"#333333"				
+	backgroundColor:"#ffffff"			
 });
 
 for (var c = 0; c < data.length; c++)
@@ -29,7 +27,7 @@ for (var c = 0; c < data.length; c++)
 	row.link =  data[c].link;
 	row.oltype = data[c].oltype;
 	row.hasDetail = true;
-
+	
 	
 		
 	var labelTitle = Ti.UI.createLabel({
@@ -38,7 +36,7 @@ for (var c = 0; c < data.length; c++)
 		top:5,
 		height:35,
 		font:{fontSize:20},
-		color:'#000'
+		color:'#333333'
 	});
 	row.add(labelTitle);
 	
@@ -47,7 +45,7 @@ for (var c = 0; c < data.length; c++)
 		left:10,
 		top:40,
 		font:{fontSize:14},
-		color:'#333'
+		color:'#555555'
 	});
 	row.add(labelTime);
 			

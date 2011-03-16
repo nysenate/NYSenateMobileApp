@@ -1,7 +1,7 @@
 Ti.include("../globals.js");
 
-var SENATOR_THUMB_BASE = "http://nysenate.gov/files/imagecache/senator_teaser/profile-pictures/";
-var SENATOR_FULL_BASE = "http://nysenate.gov/files/imagecache/teaser_featured_image/profile-pictures/";
+//var SENATOR_THUMB_BASE = "http://nysenate.gov/files/imagecache/senator_teaser/profile-pictures/";
+//var SENATOR_FULL_BASE = "http://nysenate.gov/files/imagecache/teaser_featured_image/profile-pictures/";
 
 var senatorItems = [];
 var senatorRows = [];
@@ -13,16 +13,17 @@ var senatorJsonUrl = "http://open.nysenate.gov/legislation/senators.json";
 var xhr = Ti.Network.createHTTPClient();
 xhr.setTimeout(30000);
 
-var toolActInd = Titanium.UI.createActivityIndicator();
-//toolActInd.style = Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN;
-toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
-toolActInd.color = 'white';
-toolActInd.message = 'Loading Senators...';
+
+var toolActInd = Titanium.UI.createAlertDialog({
+    title: 'Loading',
+    message: 'Loading Senators From Server\n',
+    buttonNames: []
+});
+toolActInd.show();
 
 senatorView = Titanium.UI.createTableView({
 	backgroundColor:"#ffffff",
 	left:0
-	//opacity:.8,
 	
 });
 	
@@ -142,11 +143,14 @@ function loadSenators()
 		xhr.onload = function()
 		{
 		//	Titanium.API.debug("got resp: "  +this.responseText);
-			toolActInd.hide();
+			
 
 			cacheFile("senatorsJson",this.responseText);
 
 			parseSenatorResponse(this.responseText);
+
+			toolActInd.hide();
+
 		}
 		
 		
@@ -171,7 +175,9 @@ function parseSenatorResponse (responseText)
 	 	
 	 	
 	 	var imageUrl = senatorItems[i].senator.imageUrl;
-	 	
+	 	//senatorItems[i].senator.imageUrl = imageUrl;
+	 	//senatorItems[i].senator.imageUrlLarge = imageUrl;
+		
 	 	var idx = imageUrl.lastIndexOf("/");
 	 	imageUrl = imageUrl.substring(idx+1);
 	 	
@@ -181,13 +187,11 @@ function parseSenatorResponse (responseText)
 
 		if (senatorItems[i].senator.key == "lanza")
 		{
-					senatorItems[i].senator.imageUrl = "../img/senators/" + senatorItems[i].senator.key + "-" + escape(senatorItems[i].senator.imageFileName);
+			senatorItems[i].senator.imageUrl = "../img/senators/" + senatorItems[i].senator.key + "-" + escape(senatorItems[i].senator.imageFileName);
 		}
 		
-		Ti.API.debug(senatorItems[i].senator.imageUrl);
+		senatorItems[i].senator.imageUrlLarge = imageUrl;
 		
-	 	//senatorItems[i].senator.imageUrl = SENATOR_THUMB_BASE + escape(imageUrl);
-		senatorItems[i].senator.imageUrlLarge = SENATOR_FULL_BASE + escape(imageUrl);
 
 		senatorItems[i].senator.district = senatorItems[i].senator.district.split(' ')[3];
 		senatorRows[i] = loadSenatorRow (i, senatorItems[i].senator.name, senatorItems[i].senator.district, senatorItems[i].senator.imageUrl);

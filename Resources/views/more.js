@@ -12,7 +12,7 @@ var data = [
 	{title:'Constitution', summary:'New York State Constitution',hasDetail:true,  color:"#000000",link:'http://www.nysenate.gov/constitution'},
 	{title:'State Seal', summary:'New York State Seal Image and Explanation',hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/state-seal'},
 	{title:'State History Timeline', summary:'From 1609 and onward', hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/timeline'},
-//	{title:'Office of the CIO', summary:'News from the Senate Technology Group', hasDetail:true, color:"#000000", rss:'http://www.nysenate.gov/department/cio/content/feed'}	
+
 ];
 
 var tableview = Titanium.UI.createTableView(
