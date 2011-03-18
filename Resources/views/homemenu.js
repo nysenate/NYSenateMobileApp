@@ -1,8 +1,9 @@
 Ti.include("../globals.js");
 
+
 // create table view data object
 var data = [
-	{title:'SENATORS', summary:'', hasDetail:true, tag:2,  icon:'../img/tabs/man.png'},
+	{title:'SENATORS', summary:'', hasDetail:true, tab:2,  icon:'../img/tabs/man.png'},
 	{title:'NEWSROOM', summary:'', hasDetail:true, ilink:'newsroom.js',  icon:'../img/tabs/newspaper.png'},
 	{title:'LEGISLATION', summary:'', hasDetail:true,  ilink:'legislation.js',  icon:'../img/tabs/database.png'},
 	{title:'LATEST VIDEOS', summary:'', hasDetail:true,  ilink:'videos.js',  icon:'../img/tabs/star.png'},
@@ -14,8 +15,6 @@ var tableview = Titanium.UI.createTableView(
 {
 backgroundColor:"#ffffff"
 });
-
-
 
 for (var c = 0; c < data.length; c++)
 {
@@ -47,20 +46,20 @@ tableview.addEventListener('click', function(e)
 {
 	if (e.rowData.tab)
 	{
-		Titanium.UI.currentTab.setActiveTab(e.rowData.tab);
+		//Titanium.UI.currentTab.setActiveTab(e.rowData.tab);
 	}	
 	else if (e.rowData.ilink)
 	{
-			subWin = Titanium.UI.createWindow({
-				url:e.rowData.ilink,
-				title:e.rowData.pageTitle
-				
-			});
+		subWin = Titanium.UI.createWindow({
+			url:e.rowData.ilink,
+			title:e.rowData.pageTitle
+			
+		});
 
-			subWin.channel = e.rowData.channel;
-				
-			subWin.barColor = DEFAULT_BAR_COLOR;
-			Titanium.UI.currentTab.open(subWin,{animated:true});
+		subWin.channel = e.rowData.channel;
+			
+		subWin.barColor = DEFAULT_BAR_COLOR;
+		Ti.UI.currentTab.open(subWin,{animated:true});
 	}
 	if (e.rowData.elink)
 	{
@@ -80,9 +79,9 @@ tableview.addEventListener('click', function(e)
 		subWin.barColor = DEFAULT_BAR_COLOR;
 		subWin.rss = e.rowData.rss;
 
-		Titanium.UI.currentTab.open(subWin,{animated:true});
+		Ti.UI.currentTab.open(subWin,{animated:true});
 	}
 });
 
 // add table view to the window
-Titanium.UI.currentWindow.add(tableview);
+Ti.UI.currentTab.add(tableview);

@@ -175,8 +175,7 @@ function parseSenatorResponse (responseText)
 	 	
 	 	
 	 	var imageUrl = senatorItems[i].senator.imageUrl;
-	 	//senatorItems[i].senator.imageUrl = imageUrl;
-	 	//senatorItems[i].senator.imageUrlLarge = imageUrl;
+	 	
 		
 	 	var idx = imageUrl.lastIndexOf("/");
 	 	imageUrl = imageUrl.substring(idx+1);
@@ -189,6 +188,13 @@ function parseSenatorResponse (responseText)
 		{
 			senatorItems[i].senator.imageUrl = "../img/senators/" + senatorItems[i].senator.key + "-" + escape(senatorItems[i].senator.imageFileName);
 		}
+
+		var file = Titanium.Filesystem.getFile(senatorItems[i].senator.imageUrl);
+ 
+		if(!file.exists()) { 
+			senatorItems[i].senator.imageUrl = imageUrl
+		 }
+
 		
 		senatorItems[i].senator.imageUrlLarge = imageUrl;
 		

@@ -14,8 +14,8 @@ var winHome;
 
 winHome = Titanium.UI.createWindow({  
     title:'New York State Senate',
-	url:'views/homemenu.js',
-	//url:'views/window/newsroom.js',
+	//url:'views/homemenu.js',
+url:'views/newsroom.js',
     barColor:DEFAULT_BAR_COLOR,
 	backgroundImage:"img/bg/black.png",
 //	orientationModes:[Titanium.UI.PORTRAIT]
@@ -107,49 +107,10 @@ var tabMore = Titanium.UI.createTab({
 
 tabGroup.addTab(tabMore); 
 
-var hadWelcome = Titanium.App.Properties.getString("welcome");
-
 // open tab group with a transition animation
 tabGroup.open({
 	transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
 });
 
-if (!hadWelcome)
-{
-	
 
-	//
-	// BASIC OPTIONS DIALOG
-	//
-	var dialog = Titanium.UI.createOptionDialog({
-		options:['Lookup My Senator', 'No thanks'],
-		title:'Would you like to find your Senator?'
-	});
-
-	// add event listener
-	dialog.addEventListener('click',function(e)
-	{
-		if (e.index == 0)
-		{
-		//	tabGroup.setActiveTab(2);
-			var winSearch = Titanium.UI.createWindow({
-				url:'views/findsenator.js',
-				title:'Senator Search',
-				barColor:DEFAULT_BAR_COLOR,
-				backgroundImage:'img/bg/Default.png'
-
-			});
-			tabHome.open(winSearch,{animated:true});
-
-		}
-		
-		Titanium.App.Properties.setString("welcome","done");
-		
-	});
-
-	dialog.show();
-	
-
-				
-}
 

@@ -147,7 +147,6 @@ xhr.onload = function()
 				
 				if (summary)
 				{
-					Ti.API.info("summary: " + summary.length + ": " + summary);
 				
 					if (summary.length == 0)
 						labelTitleHeight = 70;
