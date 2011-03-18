@@ -11,12 +11,6 @@ backgroundColor:"#ffffff"
 });
 var newsItems = [];
 
-// click listener - when image is clicked
-newsTable.addEventListener('click',function(e)
-{
-	
-
-});
 
 win.add(newsTable);
 
@@ -39,7 +33,6 @@ function parseNewsroomResponse (responseText)
 	var data = JSON.parse('{"data":' + responseText + '}').data;
 
 	
-	Ti.API.info(responseText);
 
 	 for (i = 0; i < data["#data"].length; i++)
 	 {
@@ -47,6 +40,7 @@ function parseNewsroomResponse (responseText)
 		newsItems[i] = new Object();
 		newsItems[i].title = item.title;
 		newsItems[i].body = item.body;
+		newsItems[i].link = "http://nysenate.gov/" + item.path;
 
 		
 			
@@ -90,7 +84,13 @@ function parseNewsroomResponse (responseText)
 		newsTable.appendRow(row);
 	}
 
-	  
+	newsTable.addEventListener('click',function(e)
+	{
+	
+		if (e.row.url)
+			showNYSenateContent(e.row.pageTitle,e.row.url,Ti.UI.currentWindow.detailView);
+	
+	});
 	
 }
 
@@ -102,6 +102,9 @@ function addRow (newsItem)
 			
 	var row = Ti.UI.createTableViewRow({height:rowHeight});
 	
+	row.url = newsItem.link;
+	row.pageTitle = newsItem.title;
+
 	var labelTitle = Ti.UI.createLabel({
 		text:newsItem.title,
 		left:60,
@@ -112,17 +115,6 @@ function addRow (newsItem)
 	});
 	row.add(labelTitle);
 
-	/*
-	if (newsItem.body.length > 0)
-	{
-		var labelSummary = Ti.UI.createLabel({
-			text:processHtml(newsItem.body).substring(0,50),
-			left:60,
-			top:35,
-			font:{fontSize:14}
-		});
-		row.add(labelSummary);
-	}*/
 	
 	if (newsItem.thumbnail)
 	{
@@ -141,6 +133,11 @@ function addRow (newsItem)
 			height:rowHeight
 		});
 		row.add(img);
+	}
+	else
+	{
+		labelTitle.left = 3;
+
 	}
 
 	row.hasDetail = true;

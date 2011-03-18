@@ -4,7 +4,11 @@ var win = Titanium.UI.currentWindow;
 
 var dToday = new Date();
 
-var calBase = "http://www.nysenate.gov/calendar/ical/YEAR-MONTH";
+var calBase = "http://www.nysenate.gov/calendar/"
+
+var calType = "session";
+
+var calTag = "/YEAR-MONTH/ical";
 
 var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
@@ -218,7 +222,7 @@ function loadMonthTable (year, month)
 
 	setMonthTitle(month);
 		
-	var iCalUrl = calBase;
+	var iCalUrl = calBase + calType + calTag;
 	iCalUrl = iCalUrl.replace('YEAR',year);
 	iCalUrl = iCalUrl.replace('MONTH',month);
 	
@@ -551,8 +555,6 @@ tableview.addEventListener('click',function(e)
 
 }
 
-win.addEventListener('focus', function ()
-{
-	loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
-});
+
+loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
 

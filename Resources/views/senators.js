@@ -41,8 +41,7 @@ senatorView = Titanium.UI.createTableView({
 			senatorName:senatorItems[e.index].senator.name,
 			senatorImage:senatorItems[e.index].senator.imageUrlLarge,
 			senatorKey:senatorItems[e.index].senator.name,
-			senatorDistrict:senatorItems[e.index].senator.district,
-			backgroundImage:'../img/bg/wood.jpg'
+			senatorDistrict:senatorItems[e.index].senator.district
 		
 		});
 
@@ -189,11 +188,12 @@ function parseSenatorResponse (responseText)
 			senatorItems[i].senator.imageUrl = "../img/senators/" + senatorItems[i].senator.key + "-" + escape(senatorItems[i].senator.imageFileName);
 		}
 
-		var file = Titanium.Filesystem.getFile(senatorItems[i].senator.imageUrl);
+
+		//var file = Titanium.Filesystem.getFile(senatorItems[i].senator.imageUrl);
  
-		if(!file.exists()) { 
-			senatorItems[i].senator.imageUrl = imageUrl
-		 }
+		//if(!file.exists()) { 
+		//	senatorItems[i].senator.imageUrl = imageUrl
+		 //}
 
 		
 		senatorItems[i].senator.imageUrlLarge = imageUrl;
