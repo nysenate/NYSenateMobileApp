@@ -1,5 +1,9 @@
 Ti.include("globals.js");
 
+var tabIdx = 0;
+
+if (Ti.UI.currentWindow.tabIdx)
+	tabIdx = Ti.UI.currentWindow.tabIdx;
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup({});
@@ -7,13 +11,18 @@ var tabGroup = Titanium.UI.createTabGroup({});
 //
 // create base UI tab and root window
 //
+var winHome;
 
+	winHome = Titanium.UI.createWindow({  
+	    title:'New York State Senate',
+		url:'views/newsroom.js',
+		orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT]
+	});
 
 var tabHome = Titanium.UI.createTab({  
     icon:'img/tabs/bank.png',
     title:'Newsroom',
-    window:winHome,
-	active:true
+    window:winHome
 });
 
 tabGroup.addTab(tabHome);
@@ -99,5 +108,11 @@ tabGroup.open({
 	transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
 });
 
+tabGroup.setActiveTab(tabIdx);
 
+tabGroup.addEventListener('close', function(e)
+			{
+				Titanium.API.info("TAB GROUP - got close");
+	
+			});
 

@@ -1,194 +1,190 @@
 Ti.include("globals.js");
-Ti.include("app-tabs.js");
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
-//Titanium.UI.setBackgroundColor(DEFAULT_BAR_COLOR);
+Titanium.UI.setBackgroundColor(DEFAULT_BAR_COLOR);
 
 //
 // create base UI tab and root window
 //
 var win;
-var tabGroup;
 
-var screenWidth = Titanium.Platform.displayCaps.platformWidth-10;
-var screenHeight = Titanium.Platform.displayCaps.platformHeight;
+win = Titanium.UI.createWindow({  
+    title:'New York State Senate',
+    barColor:DEFAULT_BAR_COLOR,
+    backgroundImage:'img/bg/bglight.jpg',
+    orientationModes:[Titanium.UI.PORTRAIT],  
+    navBarHidden:true
+});
 
-var hadWelcome = Titanium.App.Properties.getString("welcome");
-
-var transpColor = '#00ffffff';
-
-function buildWindow ()
-{
-
-	var win = Titanium.UI.createWindow({  
-	    backgroundImage:'img/bg/bglight.jpg',
-	    orientationModes:[Titanium.UI.PORTRAIT],
-	    navBarHidden:true
-	});
-
-	win.addEventListener('android:back',function(e)
-	{
-		Titanium.API.info("got win android:back event");
-			
-	});
-
-	win.open({});
-
-	var imgHeader = Ti.UI.createImageView({
+var imgHeader = Ti.UI.createImageView({
 			image:"img/header/header1.jpg",
 			top:0,
 			left:0,
-			height:60
+			height:70
 		});
-	win.add(imgHeader);
+win.add(imgHeader);
 
-	var imgTitle = Ti.UI.createImageView({
-			image:"img/header/nyss_logo.png",
-			top:0,
-			left:0,
-			height:56,
-			width:259
-		});
-	win.add(imgTitle);
-
-	
-	var tableview = Titanium.UI.createTableView({
-		separatorColor: transpColor,
-		top:64,
-		left:0
+var imgTitle = Ti.UI.createImageView({
+		image:"img/header/nyss_logo.png",
+		top:0,
+		left:0,
+		height:56,
+		width:259
 	});
+win.add(imgTitle);
 
-	// add table view to the window
-	win.add(tableview);
-
-	var iconsPerRow = 3;
-
-	var gridData = [];
-
-	gridData.push({image:'img/tabs/man.png', label:'Senators', tabIdx:1});
-	gridData.push({image:'img/tabs/man.png', label:'Committees', tabIdx:1});
-	gridData.push({image:'img/tabs/database.png', label:'Legislation',  tabIdx:3});
-	gridData.push({image:'img/tabs/newspaper.png', label:'Newsroom', tabIdx:1});
-	gridData.push({image:'img/tabs/bank.png', label:'Calendar', tabIdx:2});
-	gridData.push({image:'img/tabs/star.png', label:'Videos',  tabIdx:4});
-	gridData.push({image:'img/tabs/preferences.png', label:'About',  tabIdx:4});
-	gridData.push({image:'img/tabs/man.png', label:'Find Senator', link:'views/findsenator.js'});
-	gridData.push({image:'img/tabs/world.png', label:'NYSenate.gov', elink:'http://nysenate.gov'});
-
-	var gridColIdx = -1;
-	var gridRow;
-	var gridRowHeight = 120;
-
-	var gridIconHeight = 48;
-	var gridIconWidth = 48;
-	var gridIconBuffer = 15;
-	var gridLabelBuffer = 20;
-	var gridFontColor = "#555555";
-	var gridFontSize = "14";
-
-	var xLeft = gridIconBuffer;
-	var xRight = screenWidth - gridIconWidth - (gridIconBuffer*2);
-	var xCenter = screenWidth/2 - (gridIconWidth/2);
-
-	for (var i = 0; i < gridData.length; i++)
-	{
 	
-		if (gridColIdx == -1 || gridColIdx > 2)
-		{
-			gridRow = Ti.UI.createTableViewRow({
-				height:gridRowHeight,
-				backgroundSelectedColor:transpColor
-			});
-			tableview.appendRow(gridRow);
-			gridColIdx = 0;
-		}
 
-		var imgLeft = 0;
 
-		if (gridColIdx == 0)
-			imgLeft = xLeft;
-		else if (gridColIdx == 1)
-			imgLeft = xCenter;
-		else if (gridColIdx == 2)
-			imgLeft = xRight;	
+// create table view data object
+var data = [
+	{title:'Senators', summary:'', hasDetail:true, ilink:'tabs.js',tabIdx:0,  icon:'img/icons/senators.png'},
+	{title:'Session Calendar', summary:'', hasDetail:true,ilink:'tabs.js',tabIdx:1,  icon:'img/icons/calendar.png'},
+	{title:'Newsroom', summary:'', hasDetail:true,ilink:'tabs.js',tabIdx:2,  icon:'img/icons/comments.png'},
+	{title:'Open Legislation', summary:'', hasDetail:true,  ilink:'tabs.js',tabIdx:3,  icon:'img/icons/legislation.png'},
+	{title:'Latest Videos', summary:'', hasDetail:true,  ilink:'views/videos.js', icon:'img/icons/videos.png'},
+	{title:'More Information', summary:'', hasDetail:true,  ilink:'tabs.js',tabIdx:4,   icon:'img/icons/more.png'},
+	{title:'Visit NYSenate.gov', summary:'', hasDetail:true, elink:'http://nysenate.gov',  icon:'img/icons/home.png'},
+];
+
+var tableview = Titanium.UI.createTableView(
+{
+backgroundColor:"#ffffff",
+opacity:.8,
+top:64,
+separatorColor:"#cccccc"
+
+});
+
+for (var c = 0; c < data.length; c++)
+{
 	
-		var img = Ti.UI.createImageView({
-			image:gridData[i].image,
-			top:gridIconBuffer,
-			left:imgLeft,
-			height:gridIconHeight,
-			width:gridIconWidth,
-			pageLink:gridData[i].link,
-			pageTitle:gridData[i].label,
-			tabIdx:gridData[i].tabIdx
+	
+	row = Ti.UI.createTableViewRow({height:60, fontSize:'14pt', color:'#333333'});
+	row.pageTitle = data[c].title;
+	row.link =  data[c].link;
+	row.rss =  data[c].rss;
+	row.ilink =  data[c].ilink;
+	row.oltype = data[c].oltype;
+	row.hasDetail =  data[c].hasDetail;
+	//row.leftImage = data[c].icon;
+	row.tabIdx = data[c].tabIdx;
+
+	var labelImg = Ti.UI.createImageView({
+			image:data[c].icon,
+			top:8,
+			left:2,
+			height:48,
+			width:48
 		});
+	row.add(labelImg);
 
-		img.addEventListener('click', function(e)
-		{
-			if (e.source.pageLink)
-			{
-				var newWin = Titanium.UI.createWindow({
-					url:e.source.pageLink,
-					title:e.source.pageTitle,
-					orientationModes:[Titanium.UI.PORTRAIT],
-					modal:true
-
-				});
-				
-				newWin.close();
-				newWin.open();
-
-				newWin.addEventListener('close',function(e)
-				{
-
-					Titanium.API.info("got android BACK key event for new win");
-					
-
-				});
-		
-			}
-			else if (e.source.tabIdx)
-			{
-				
-				
-				var tabWin = Titanium.UI.createWindow({
-					url:"app-tabs.js",
-					orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT],
-					modal:true
-				});
-			
-				tabWin.open({});
-
-				tabWin.addEventListener('close',function(e)
-				{
-					Titanium.API.info("got tab win close key event!");
-					//win.visible = true;
-
-				});
-			}
+	var labelTitle = Ti.UI.createLabel({
+		text:data[c].title,
+		left:56,
+		top:15,
+		height:35,
+		font:{fontSize:20},
+		color:'#333333'
+	});
+	row.add(labelTitle);
 	
-		});
+	tableview.appendRow(row);
 		
-		gridRow.add(img);
-
-		var imgLabel = Ti.UI.createLabel({
-			text:gridData[i].label,
-			left:imgLeft-gridLabelBuffer,
-			width:gridIconWidth+(gridLabelBuffer*2),
-			textAlign:'center',
-			top:gridIconBuffer+gridIconHeight,
-			font:{fontSize:gridFontSize},
-			color:gridFontColor
-		});
-		gridRow.add(imgLabel);
-		
-		gridColIdx++;
 	
-	}
-
-	
-	return win;
 }
 
+
+var subWin;
+
+// create table view event listener
+tableview.addEventListener('click', function(e)
+{
+	if (e.rowData.tab)
+	{
+		//Titanium.UI.currentTab.setActiveTab(e.rowData.tab);
+	}	
+	else if (e.rowData.ilink)
+	{
+		subWin = Titanium.UI.createWindow({
+			url:e.rowData.ilink,
+			title:e.rowData.pageTitle,
+			modal:true
+		});
+
+		subWin.channel = e.rowData.channel;
+		subWin.tabIdx = e.rowData.tabIdx;
+
+		subWin.barColor = DEFAULT_BAR_COLOR;
+		subWin.open({animated:true});
+		subWin.focusCount = 0;
+		
+		subWin.addEventListener('focus', function(e)
+		{
+
+			Titanium.API.info("TAB PARENT - got focus");
+			
+			subWin.focusCount = subWin.focusCount + 1;
+
+			if (subWin.focusCount > 1)
+				subWin.close();
+			
+			//	Ti.API.info("closing curr window");
+			//	Ti.UI.currentWindow.close();
+			
+			
+		});
+
+		subWin.addEventListener('blur', function(e)
+			{
+				Titanium.API.info("TAB PARENT - got blur");
+	
+			});
+
+		subWin.addEventListener('close', function(e)
+			{
+				Titanium.API.info("TAB PARENT - got close");
+	
+			});
+
+		subWin.addEventListener('android:back', function(e)
+			{
+				Titanium.API.info("TAB PARENT - got android:back!");
+				subWin.close();
+			});
+
+
+	}
+	if (e.rowData.elink)
+	{
+		showWebModal(e.rowData.pageTitle,e.rowData.elink);
+	}
+	else if (e.rowData.link)
+	{
+		showNYSenateContent(e.rowData.pageTitle,e.rowData.link);
+	}
+	else if (e.rowData.rss)
+	{
+		subWin = Titanium.UI.createWindow({
+			url:'views/rss.js',
+			title:e.rowData.pageTitle,
+			modal:true
+
+		});
+
+		subWin.barColor = DEFAULT_BAR_COLOR;
+		subWin.rss = e.rowData.rss;
+
+		subWin.open({animated:true});
+	}
+});
+
+// add table view to the window
+win.add(tableview);
+Titanium.UI.currentWindow = win;
+win.open({});
+
+
+var hadWelcome = Titanium.App.Properties.getString("welcome");
 
 
 if (!hadWelcome)
@@ -211,9 +207,8 @@ if (!hadWelcome)
 				url:'views/findsenator.js',
 				title:'Senator Search',
 				barColor:DEFAULT_BAR_COLOR,
-				backgroundImage:'../img/bg/senatebg.jpg',
-				fullscreen:false,
-				top:100
+				backgroundImage:'img/bg/Default.png',
+				modal:true
 
 			});
 			win.open(winSearch,{animated:true});
@@ -228,7 +223,4 @@ if (!hadWelcome)
 	
 				
 }
-
-
-win = buildWindow();
 
