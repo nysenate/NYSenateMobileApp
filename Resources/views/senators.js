@@ -14,12 +14,6 @@ var xhr = Ti.Network.createHTTPClient();
 xhr.setTimeout(30000);
 
 
-var toolActInd = Titanium.UI.createAlertDialog({
-    title: 'Loading',
-    message: 'Loading Senators From Server\n',
-    buttonNames: []
-});
-toolActInd.show();
 
 senatorView = Titanium.UI.createTableView({
 	backgroundColor:"#ffffff",
@@ -108,6 +102,7 @@ else
 function loadSenators()
 {
 	
+	
 
 	if (senatorItems && senatorItems.length > 0)
 	{
@@ -125,14 +120,14 @@ function loadSenators()
 	}
 	else
 	{
-		Ti.API.debug("loading senators...");
+		
 	
 		
 		xhr.onerror = function (e)
 		{
 			Titanium.API.debug("got xhr error: " + e);
 			
-			toolActInd.hide();
+			hideLoadingDialog();
 				
 			//alert(e);
 			Titanium.UI.createAlertDialog({title:'NY Senate', message:'There was an error accessing the senator data. Please try again later.'}).show();
@@ -148,12 +143,12 @@ function loadSenators()
 
 			parseSenatorResponse(this.responseText);
 
-			toolActInd.hide();
+			hideLoadingDialog();
 
 		}
 		
 		
-		toolActInd.show();
+		showLoadingDialog("Loading","Loading Senators...");
 
 		xhr.open("GET",senatorJsonUrl);
 		xhr.send();

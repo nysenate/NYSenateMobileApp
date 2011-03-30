@@ -2,7 +2,7 @@ Ti.include("../globals.js");
 
 // create table view data object
 var data = [
-	{title:'Video Search', summary:'Access to the YouTube Video Archive', hasDetail:true, color:"#000000", ilink:'../inc/youtube.js', channel:'NYSenate'},
+	//{title:'Video Search', summary:'Access to the YouTube Video Archive', hasDetail:true, color:"#000000", ilink:'../inc/youtube.js', channel:'NYSenate'},
 	{title:'About the Senate', summary:'From the NYSenate.gov Website', hasDetail:true,  color:"#000000",link:'http://www.nysenate.gov/about-us'},
 	{title:'Knowledge Base', summary:'Frequently Asked Questions and more', hasDetail:true,  color:"#000000",link:'http://www.nysenate.gov/frequently-asked-questions'},
 	{title:'Visiting the Capitol', summary:'Directions and Maps', hasDetail:true, color:"#000000", link:'http://www.nysenate.gov/node/76'},

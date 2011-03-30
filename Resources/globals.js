@@ -35,8 +35,26 @@ win.addEventListener('android:back', function (e) {
 });
 */
 
-var senatorJson;
+var toolActInd;
+function showLoadingDialog (mTitle, mMessage)
+{
+	toolActInd = Titanium.UI.createAlertDialog({
+    		title: mTitle,
+    		message: mMessage,
+    		buttonNames: []
+	});
+	toolActInd.show();
 
+}
+
+function hideLoadingDialog ()
+{
+	if (toolActInd)
+		toolActInd.hide();
+}
+
+
+var senatorJson;
 function getSenatorJSON ()
 {
 	if (!senatorJson)

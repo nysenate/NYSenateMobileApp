@@ -16,6 +16,7 @@ var months = ["January","February","March","April","May","June","July","August",
 var tableview;
 var monthOffset = 0;
 
+
 function processTime (timeString)
 {
 	
@@ -215,6 +216,7 @@ function setMonthTitle (month)
 		
 }
 
+
 function loadMonthTable (year, month)
 {	
 	
@@ -231,12 +233,8 @@ function loadMonthTable (year, month)
 	
 	Titanium.API.info("loading iCalUrl: " + iCalURL);
 	
-	var toolActInd = Titanium.UI.createActivityIndicator();
-	toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
-	toolActInd.color = 'white';
-	toolActInd.message = 'Loading calendar...';
-	//win.setToolbar([toolActInd],{animated:true});
-	toolActInd.show();
+	showLoadingDialog("Loading","Loading Calendar...");
+	
 		
 	var xhr = Ti.Network.createHTTPClient();
 
@@ -244,7 +242,8 @@ function loadMonthTable (year, month)
 	xhr.onload = function()
 	{
 		Titanium.API.info("got iCalUrl onload");
-			
+		hideLoadingDialog();
+
 		var data = [];
 		
 		var isFirst = true;
@@ -367,7 +366,8 @@ function loadMonthTable (year, month)
 	
 			}
 		
-			toolActInd.hide();
+			
+
 
 			
 	};
@@ -376,7 +376,8 @@ function loadMonthTable (year, month)
 	xhr.onerror = function(e)
 	{
 		Titanium.API.debug("error loading iCalUrl: " + e.error);
-			toolActInd.hide();
+		hideLoadingDialog();
+
 	};
 	
 	xhr.setTimeout(30000);
@@ -507,38 +508,26 @@ var flexSpace = Titanium.UI.createButton({
 	}
 	else
 	{
-	/*
-		var menu = Titanium.UI.Android.OptionMenu.createMenu();
+		var tb1 = null;
 	 
-		var item1 = Titanium.UI.Android.OptionMenu.createMenuItem({
-			title : 'Previous Month'
-		});
-		 
-		item1.addEventListener('click', function(){
-			Titanium.API.debug("prev day");
-			monthOffset--;
-			
-			loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
-		});
-		
-		var item2 = Titanium.UI.Android.OptionMenu.createMenuItem({
-			title : 'Next Month'
-		});
-		 
-		item2.addEventListener('click', function(){
-			Titanium.API.debug("next month");
-			monthOffset++;
-			
-			loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
-		});
-		
-		menu.add(item1);
-		menu.add(item2);
-	
-		
-		Titanium.UI.Android.OptionMenu.setMenu(menu);
-		*/
+		var menuHandler = function() {
+			tb1.addEventListener('click', function() {
+				loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
+			});
+		};
+	 
+		var activity = Ti.Android.currentActivity;
+		activity.onCreateOptionsMenu = function(e) {
+			var menu = e.menu;
+			tb1 = menu.add({title : 'Reload'});
+			menuHandler();
+		};
 	}
+
+
+
+
+	
 
 tableview.addEventListener('click',function(e)
 	{

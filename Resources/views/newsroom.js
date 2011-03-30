@@ -17,7 +17,7 @@ win.add(newsTable);
 function loadTheNews()
 {
 	
-		
+	showLoadingDialog("Loading","Loading News...");
 	var serviceCallback = function(){
 		parseNewsroomResponse(this.responseText);
 	};
@@ -28,6 +28,9 @@ function loadTheNews()
 
 function parseNewsroomResponse (responseText)
 {
+
+	hideLoadingDialog();
+
 	newsItems = [];
 		
 	var data = JSON.parse('{"data":' + responseText + '}').data;

@@ -3,7 +3,6 @@ Ti.include("../globals.js");
 
 var data = [];
 
-
 data.push({title:'Bills & Resolutions',summary:'Senate Bills, Resolution and more', link:'olsearch.js', oltype:'bill'});
 data.push({title:'Meeting Agendas',summary:'Committee Meetings Time, Place, Notes and Bills',  link:'olsearch.js', oltype:'meeting'});
 data.push({title:'Calendars & Active Lists', summary:'Bills scheduled for the Senate Floor',link:'olsearch.js', oltype:'calendar'});
