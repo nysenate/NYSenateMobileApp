@@ -1,11 +1,14 @@
 Ti.include("../globals.js");
 
+var SENATOR_IMAGE_BASE = "http://www.nysenate.gov/files/imagecache/teaser_featured_image/profile-pictures/";
+
 var win = Titanium.UI.currentWindow;
 var IMAGE_RESIZER = "http://nysenatemobile.appspot.com/servlet/ImageResizer?url=";
 
+win.backgroundImage = "../img/bg/wood.jpg";
 
 var senatorName = win.senatorName;
-var senatorImage = win.senatorImage;
+var senatorImage = SENATOR_IMAGE_BASE + escape(win.senatorImage);
 var senatorKey = win.senatorKey;
 var senatorDistrict = win.senatorDistrict;
 var senatorNodeId = win.nid;
@@ -31,6 +34,8 @@ legSearchKey = legSearchKey.replace("-jr","");
 legSearchKey = legSearchKey.replace("-sr","");
 legSearchKey = legSearchKey.substring(legSearchKey.lastIndexOf("-")+1);
 
+Ti.API.info("got senator image: " + senatorImage);
+
 /*
 var cachedImage = getCachedFile(senatorImage);
 				
@@ -45,7 +50,7 @@ var imgSenator = Titanium.UI.createImageView({
 	url:senatorImage,
 	width:85,
 	height:112,
-	top:10,
+	top:30,
 	left:10,
 	visible:true,
 	backgroundColor:"#ffffff",
@@ -70,7 +75,7 @@ var messageLabel = Titanium.UI.createLabel({
 	text:senatorTitleText,
 	left:105,
 	width:205,
-	top:20,
+	top:40,
 	height:'auto',
 	font:{fontSize:20}
 	
@@ -85,24 +90,24 @@ if (isiOS4Plus())
 	{
 tdata = [
 	{title:'Contact Information',hasChild:true,link:senatorUrl + "/contact"},
-	{title:'View District Map',hasChild:true,title:'District Map',kml:'http://geo.nysenate.gov/maps/kml/sd' + senatorDistrict + '.kml?key=YgiZWjKgealrvSlyDMQRMYEaNLv2fFiz'},	
-	{title:"Latest News & Updates",hasChild:true, rss:senatorUrl+ "/content/feed"},
+	{title:'District Map',hasChild:true,title:'District Map',kml:'http://geo.nysenate.gov/maps/kml/sd' + senatorDistrict + '.kml?key=YgiZWjKgealrvSlyDMQRMYEaNLv2fFiz'},	
+	{title:"Newsroom",hasChild:true, rss:senatorUrl+ "/content/feed"},
 	{title:'Sponsored Bills',hasChild:true,olterm:"sponsor:"+legSearchKey + " AND otype:bill AND (oid:S* or oid:A*)"},
-	{title:'Chaired Meetings',hasChild:true,olterm:"chair:"+legSearchKey + " AND otype:meeting"},
-	{title:'All Legislative Activity',hasChild:true,olterm:legSearchKey},
+//	{title:'Chaired Meetings',hasChild:true,olterm:"chair:"+legSearchKey + " AND otype:meeting"},
+//	{title:'All Legislative Activity',hasChild:true,olterm:legSearchKey},
 	{title:'Biography',hasChild:true,link:senatorUrl + "/bio"}
 ];
 }
 else
 {
 	tdata = [
-	{title:'Contact Information',hasChild:true,link:senatorUrl + "/contact"},	
-    {title:'View District Map',hasChild:true,title:'District Map',elink:'http://www.nysenate.gov/files/imagecache/district_map/' + senatorDistrict + '_small_0.png'},
-	{title:"Latest News & Updates",hasChild:true, rss:senatorUrl+ "/content/feed"},
-	{title:'Sponsored Bills',hasChild:true,olterm:"sponsor:"+legSearchKey + " AND otype:bill AND (oid:S* or oid:A*)"},
-	{title:'Chaired Meetings',hasChild:true,olterm:"chair:"+legSearchKey + " AND otype:meeting"},
-	{title:'All Legislative Activity',hasChild:true,olterm:legSearchKey},
-	{title:'Biography',hasChild:true,link:senatorUrl + "/bio"}
+	{title:'Contact Information',hasChild:true,link:senatorUrl + "/contact",color:"#333333"},	
+    {title:'District Map',hasChild:true,title:'District Map',elink:'http://www.nysenate.gov/files/imagecache/district_map/' + senatorDistrict + '_small_0.png',color:"#333333"},
+	{title:"Newsroom",hasChild:true, rss:senatorUrl+ "/content/feed",color:"#333333"},
+	{title:'Sponsored Bills',hasChild:true,olterm:"sponsor:"+legSearchKey + " AND otype:bill AND (oid:S* or oid:A*)",color:"#333333"},
+//	{title:'Chaired Meetings',hasChild:true,olterm:"chair:"+legSearchKey + " AND otype:meeting"},//
+//	{title:'All Legislative Activity',hasChild:true,olterm:legSearchKey},
+	{title:'Biography',hasChild:true,link:senatorUrl + "/bio",color:"#333333"}
 ];
 
 }
@@ -110,7 +115,7 @@ else
 if (twitter && twitter != "null")
 {
 var row = new Object();
-row.title = "Twitter Feed";
+row.title = "Twitter";
 row.hasChild = true;
 row.link = twitter;
 tdata[tdata.length] = row;
@@ -124,7 +129,7 @@ if (facebook && facebook != "null")
 {
 
 var row = new Object();
-row.title = "Facebook Page";
+row.title = "Facebook";
 row.hasChild = true;
 row.link = facebook;
 tdata[tdata.length] = row;
@@ -138,9 +143,11 @@ tdata[tdata.length] = row;
 // create table view
 var tableViewOptions = {
 		data:tdata,
-	top:130,
+	top:150,
 	left:0,
-	visible:true
+	visible:true,
+	separatorColor:"#cccccc",
+	backgroundColor:"#ffffff"
 	};
 
 

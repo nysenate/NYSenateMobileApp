@@ -10,29 +10,27 @@ var win;
 win = Titanium.UI.createWindow({  
     title:'New York State Senate',
     barColor:DEFAULT_BAR_COLOR,
-    backgroundImage:'img/bg/bglight.jpg',
     orientationModes:[Titanium.UI.PORTRAIT],  
     navBarHidden:true
 });
 
 var imgHeader = Ti.UI.createImageView({
-			image:"img/header/header1.jpg",
+			image:'img/header/headerfull.jpg',
 			top:0,
 			left:0,
 			height:70
 		});
+
 win.add(imgHeader);
 
 var imgTitle = Ti.UI.createImageView({
-		image:"img/header/nyss_logo.png",
-		top:0,
-		left:0,
+		image:'img/header/nyss_logo.png',
+		top:4,
+		left:4,
 		height:56,
 		width:259
 	});
 win.add(imgTitle);
-
-	
 
 
 // create table view data object
@@ -41,16 +39,16 @@ var data = [
 	{title:'Session Calendar', summary:'', hasDetail:true,ilink:'tabs.js',tabIdx:1,  icon:'img/icons/calendar.png'},
 	{title:'Newsroom', summary:'', hasDetail:true,ilink:'tabs.js',tabIdx:2,  icon:'img/icons/comments.png'},
 	{title:'Open Legislation', summary:'', hasDetail:true,  ilink:'tabs.js',tabIdx:3,  icon:'img/icons/legislation.png'},
-	{title:'Latest Videos', summary:'', hasDetail:true,  ilink:'views/videos.js', icon:'img/icons/videos.png'},
+	{title:'Latest Videos', summary:'', hasDetail:true,  ilink:'inc/youtube.js', icon:'img/icons/videos.png'},	
+	{title:'Find Your Senator', summary:'', hasDetail:true,  ilink:'views/findsenator.js', icon:'img/icons/search.png'},
 	{title:'More Information', summary:'', hasDetail:true,  ilink:'tabs.js',tabIdx:4,   icon:'img/icons/more.png'},
 	{title:'Visit NYSenate.gov', summary:'', hasDetail:true, elink:'http://nysenate.gov',  icon:'img/icons/home.png'},
 ];
 
 var tableview = Titanium.UI.createTableView(
 {
-backgroundColor:"#ffffff",
-opacity:.8,
-top:64,
+backgroundImage:'img/bg/bglight.jpg',
+top:70,
 separatorColor:"#cccccc"
 
 });
@@ -71,7 +69,7 @@ for (var c = 0; c < data.length; c++)
 
 	var labelImg = Ti.UI.createImageView({
 			image:data[c].icon,
-			top:8,
+			top:6,
 			left:2,
 			height:48,
 			width:48
@@ -81,7 +79,7 @@ for (var c = 0; c < data.length; c++)
 	var labelTitle = Ti.UI.createLabel({
 		text:data[c].title,
 		left:56,
-		top:15,
+		top:12,
 		height:35,
 		font:{fontSize:20},
 		color:'#333333'
@@ -154,7 +152,7 @@ tableview.addEventListener('click', function(e)
 
 
 	}
-	if (e.rowData.elink)
+	else if (e.rowData.elink)
 	{
 		showWebModal(e.rowData.pageTitle,e.rowData.elink);
 	}

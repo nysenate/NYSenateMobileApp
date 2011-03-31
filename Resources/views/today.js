@@ -484,7 +484,7 @@ var flexSpace = Titanium.UI.createButton({
 	
 		btnNext.addEventListener('click',function()
 		{
-			Titanium.API.debug("next day");
+
 			
 			monthOffset++;
 			loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
@@ -499,7 +499,7 @@ var flexSpace = Titanium.UI.createButton({
 		
 		btnPrev.addEventListener('click',function()
 		{
-			Titanium.API.debug("prev day");
+
 			monthOffset--;
 			loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
 		});
@@ -508,10 +508,20 @@ var flexSpace = Titanium.UI.createButton({
 	}
 	else
 	{
-		var tb1 = null;
-	 
+		var menu1 = null;
+		var menu2 = null; 
+	 	var menu2 = null; 
+
 		var menuHandler = function() {
-			tb1.addEventListener('click', function() {
+			menu1.addEventListener('click', function() {
+				monthOffset--;
+				loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
+			});
+			menu2.addEventListener('click', function() {
+				loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
+			});
+			menu3.addEventListener('click', function() {
+				monthOffset++;
 				loadMonthTable(dToday.getFullYear(), (dToday.getMonth()+1+monthOffset));
 			});
 		};
@@ -519,7 +529,10 @@ var flexSpace = Titanium.UI.createButton({
 		var activity = Ti.Android.currentActivity;
 		activity.onCreateOptionsMenu = function(e) {
 			var menu = e.menu;
-			tb1 = menu.add({title : 'Reload'});
+			menu1 = menu.add({title : 'Prev'});
+			menu2 = menu.add({title : 'Reload'});
+			menu3 = menu.add({title : 'Next'});
+			
 			menuHandler();
 		};
 	}

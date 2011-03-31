@@ -2,6 +2,8 @@ Ti.include("../globals.js");
 
 var win = Titanium.UI.currentWindow;
 
+win.top = 150;
+
 var geoInProgress = false;
 var rowHeight = 40;
 

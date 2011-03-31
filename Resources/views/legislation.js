@@ -1,19 +1,38 @@
 // create table view data object
 Ti.include("../globals.js");
 
+
+
+var imgHeader = Ti.UI.createImageView({
+			image:'../img/header/openleglogo.png',
+			top:2,
+			left:2,
+			height:36
+		});
+
+Titanium.UI.currentWindow.add(imgHeader);
+
 var data = [];
 
-data.push({title:'Bills & Resolutions',summary:'Senate Bills, Resolution and more', link:'olsearch.js', oltype:'bill'});
+data.push({title:'Online Search',summary:'keyword searching for all of Open Legislation', dosearch:'true'});
+data.push({title:'Bills & Resolutions',summary:'Legislative Data for the current session', link:'olsearch.js', oltype:'bill'});
 data.push({title:'Meeting Agendas',summary:'Committee Meetings Time, Place, Notes and Bills',  link:'olsearch.js', oltype:'meeting'});
 data.push({title:'Calendars & Active Lists', summary:'Bills scheduled for the Senate Floor',link:'olsearch.js', oltype:'calendar'});
-data.push({title:'Bill Actions',summary:'Every Action for Every Bill', link:'olsearch.js', oltype:'action'});
+//data.push({title:'Bill Actions',summary:'Every Action for Every Bill', link:'olsearch.js', oltype:'action'});
 data.push({title:'Recent Votes', summary:'Floor and Committee Vote Records',link:'olsearch.js', oltype:'vote'});
 data.push({title:'Transcripts', summary:'Senate Session and Hearing Transcripts', link:'olsearch.js', oltype:'transcript'});
 data.push({title:'By Committee', summary:'Browse Legislation by Committee', link:'committees.js'});
 	
+
+
 // create table view
 var tableview = Titanium.UI.createTableView({
-	backgroundColor:"#ffffff"			
+	backgroundColor:"#ffffff",
+	top:45,
+	left:0,
+	separatorColor:"#cccccc",
+	backgroundImage:'../img/bg/bglight.jpg'
+		
 });
 
 for (var c = 0; c < data.length; c++)
@@ -31,8 +50,8 @@ for (var c = 0; c < data.length; c++)
 		
 	var labelTitle = Ti.UI.createLabel({
 		text:data[c].title,
-		left:10,
-		top:5,
+		left:6,
+		top:6,
 		height:35,
 		font:{fontSize:20},
 		color:'#333333'
@@ -41,7 +60,7 @@ for (var c = 0; c < data.length; c++)
 	
 	var labelTime = Ti.UI.createLabel({
 		text:data[c].summary,
-		left:10,
+		left:6,
 		top:40,
 		font:{fontSize:14},
 		color:'#555555'
@@ -74,6 +93,11 @@ tableview.addEventListener('click', function(e)
 		
 		Titanium.UI.currentTab.open(win,{animated:true});
 	}
+	else if (e.rowData.dosearch)
+	{
+		search.visible = true;
+		tableview.top = 45;
+	}
 });
 
 
@@ -81,10 +105,11 @@ tableview.addEventListener('click', function(e)
 	Titanium.UI.currentWindow.add(tableview);
 
 	var search = Titanium.UI.createSearchBar({
-		barColor:'#000', 
+		barColor:'#333333',
+		hintText:'enter search keywords', 
 		showCancel:true,
 		height:43,
-		top:0,
+		top:2,
 		visible:false
 	});
 

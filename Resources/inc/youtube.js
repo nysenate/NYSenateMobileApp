@@ -166,7 +166,7 @@ xhr.onload = function()
 			var labelTitle = Ti.UI.createLabel({
 				text:title,
 				left:105,
-				top:10,
+				top:5,
 				height:40,
 				font:{fontSize:16},
 				color:"#ffffff"

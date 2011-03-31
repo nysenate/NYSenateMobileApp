@@ -5,12 +5,7 @@ var OL_ITEM_BASE = 'http://open.nysenate.gov/api/1.0/mobile/';
 
 var win = Titanium.UI.currentWindow;
 
-var toolActInd = Titanium.UI.createActivityIndicator();
-//toolActInd.style = Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN;
-toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
-toolActInd.color = 'white';
-toolActInd.message = 'Searching legislative data...';
-toolActInd.show();
+
 
 // create table view data object
 var data =[];
@@ -29,6 +24,9 @@ if (Titanium.UI.currentWindow.olterm)
 	var olterm = Titanium.UI.currentWindow.olterm;
 	listUrl += "&term=" + escape(olterm);
 }
+
+showLoadingDialog("Searching","Connecting to Open Legislation...");
+
 
 /*
 var pageIdx = "1";
@@ -56,7 +54,7 @@ xhr.onerror = function (e)
 {
 	Titanium.API.debug("got xhr error: " + e);
 	
-	toolActInd.hide();
+	hideLoadingDialog();
 		
 	//alert(e);
 	Titanium.UI.createAlertDialog({title:'NY Senate', message:'There was an error accessing the legislative data. Please try again later.'}).show();
@@ -190,9 +188,9 @@ xhr.onload = function()
 	
 			tableview = Titanium.UI.createTableView({
 				data:data,
-				backgroundColor:"#ffffff",
-				opacity:.8,
-				color:"#333333"	
+				color:"#333333",
+				separatorColor:"#cccccc",
+				backgroundImage:'../img/bg/bglight.jpg',
 			});
 				
 			Titanium.UI.currentWindow.add(tableview);
@@ -218,7 +216,8 @@ xhr.onload = function()
 	}
 	
 	
-		toolActInd.hide();
+		
+	hideLoadingDialog();
 };
 
 

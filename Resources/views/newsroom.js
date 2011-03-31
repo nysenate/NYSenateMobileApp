@@ -32,6 +32,8 @@ function parseNewsroomResponse (responseText)
 	hideLoadingDialog();
 
 	newsItems = [];
+
+	//Ti.API.info(responseText);
 		
 	var data = JSON.parse('{"data":' + responseText + '}').data;
 
@@ -67,7 +69,7 @@ function parseNewsroomResponse (responseText)
 					{
 						for (dIdx = 0; dIdx < descImages.length; dIdx++)
 						{
-							Ti.API.debug("found match: " + descImages[dIdx]);
+							//Ti.API.debug("found match: " + descImages[dIdx]);
 							newsItems[i].thumbnail = descImages[dIdx];
 		
 						}
@@ -112,13 +114,13 @@ function addRow (newsItem)
 		text:newsItem.title,
 		left:60,
 		top:1,
-		height:rowHeight,
+		height:rowHeight * .6,
 		font:{fontSize:18},
 		color:'#333333'
 	});
 	row.add(labelTitle);
 
-	
+
 	if (newsItem.thumbnail)
 	{
 		var cachedImage = getCachedFile(newsItem.thumbnail);

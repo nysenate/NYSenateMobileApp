@@ -144,16 +144,12 @@ function createWebView ()
 			webModal.rightNavButton = btnSearch;
 		}
 	
-		toolActInd = Titanium.UI.createActivityIndicator();
-		toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
-		toolActInd.color = 'white';
-		toolActInd.message = 'Loading...';
+		
 		
 		webModalView.addEventListener('beforeload',function(e)
 		{
-			Ti.API.debug("webview beforeload: "+e.url);
 			
-			toolActInd.show();
+			showLoadingDialog("Loading","Loading web content...");
 
 		});
 			
@@ -161,7 +157,7 @@ function createWebView ()
 		{
 			Ti.API.debug("webview loaded: "+e.url);
 			
-			toolActInd.hide();
+			hideLoadingDialog();
 
 		});
 	
@@ -175,7 +171,6 @@ function showWebModal(wTitle, wUrl)
 		currentLink = wUrl;
 		
 		createWebView();
-		
 		
 		webModal.title = wTitle;
 		
@@ -259,7 +254,7 @@ function showNYSenateContent(wTitle, wUrl)
 			
 			webModalView.html = processNYSenateHtml(cFile);
 					
-			toolActInd.hide();
+			hideLoadingDialog();
 		}
 		else
 		{
@@ -276,7 +271,8 @@ function showNYSenateContent(wTitle, wUrl)
 				
 				webModalView.html = processNYSenateHtml(this.responseText);
 					
-				toolActInd.hide();
+				
+				hideLoadingDialog();
 					
 			};
 			

@@ -16,8 +16,9 @@ xhr.setTimeout(30000);
 
 
 senatorView = Titanium.UI.createTableView({
-	backgroundColor:"#ffffff",
-	left:0
+	left:0,
+	separatorColor:"#cccccc",
+	backgroundImage:'../img/bg/bglight.jpg'
 	
 });
 	
@@ -35,7 +36,8 @@ senatorView = Titanium.UI.createTableView({
 			senatorName:senatorItems[e.index].senator.name,
 			senatorImage:senatorItems[e.index].senator.imageUrlLarge,
 			senatorKey:senatorItems[e.index].senator.name,
-			senatorDistrict:senatorItems[e.index].senator.district
+			senatorDistrict:senatorItems[e.index].senator.district,
+			modal:true
 		
 		});
 
@@ -191,7 +193,7 @@ function parseSenatorResponse (responseText)
 		 //}
 
 		
-		senatorItems[i].senator.imageUrlLarge = imageUrl;
+		senatorItems[i].senator.imageUrlLarge = senatorItems[i].senator.imageFileName;
 		
 
 		senatorItems[i].senator.district = senatorItems[i].senator.district.split(' ')[3];
