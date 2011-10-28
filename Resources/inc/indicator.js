@@ -10,7 +10,7 @@ function showIndicator()
 		height:150,
 		width:150
 	});
-	
+
 	// black view
 	var indView = Titanium.UI.createView({
 		height:150,
@@ -20,7 +20,7 @@ function showIndicator()
 		opacity:0.8
 	});
 	indWin.add(indView);
-	
+
 	// loading indicator
 	actInd = Titanium.UI.createActivityIndicator({
 		style:Titanium.UI.iPhone.ActivityIndicatorStyle.BIG,
@@ -28,7 +28,7 @@ function showIndicator()
 		width:30
 	});
 	indWin.add(actInd);
-	
+
 	// message
 	var message = Titanium.UI.createLabel({
 		text:'Loading',
@@ -41,7 +41,7 @@ function showIndicator()
 	indWin.add(message);
 	indWin.open();
 	actInd.show();
-	
+
 };
 
 function hideIndicator()

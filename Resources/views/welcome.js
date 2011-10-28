@@ -21,7 +21,7 @@ var messageLabel = Titanium.UI.createLabel({
 	width:'auto',
 	height:'auto',
 	opacity:0.7
-	
+
 });
 
 messageView.add(messageLabel);
@@ -44,7 +44,7 @@ find.addEventListener('click',function(e)
 {
 	win.close(	{
 				transition:Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_RIGHT});
-				
+
 });
 
 win.add(find);

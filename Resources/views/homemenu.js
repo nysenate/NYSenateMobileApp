@@ -18,8 +18,8 @@ backgroundColor:"#ffffff"
 
 for (var c = 0; c < data.length; c++)
 {
-	
-	
+
+
 	row = Ti.UI.createTableViewRow({height:60});
 	row.className = 'morerow';
 	row.color = '#333333';
@@ -30,12 +30,12 @@ for (var c = 0; c < data.length; c++)
 	row.oltype = data[c].oltype;
 	row.hasDetail = true;
 	row.leftImage = data[c].icon;
-		
+
 	row.title = data[c].title;
-	
+
 	tableview.appendRow(row);
-		
-	
+
+
 }
 
 
@@ -47,17 +47,17 @@ tableview.addEventListener('click', function(e)
 	if (e.rowData.tab)
 	{
 		//Titanium.UI.currentTab.setActiveTab(e.rowData.tab);
-	}	
+	}
 	else if (e.rowData.ilink)
 	{
 		subWin = Titanium.UI.createWindow({
 			url:e.rowData.ilink,
 			title:e.rowData.pageTitle
-			
+
 		});
 
 		subWin.channel = e.rowData.channel;
-			
+
 		subWin.barColor = DEFAULT_BAR_COLOR;
 		Ti.UI.currentTab.open(subWin,{animated:true});
 	}

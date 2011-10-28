@@ -7,7 +7,7 @@ Titanium.UI.setBackgroundColor(DEFAULT_BAR_COLOR);
 //
 var winHome;
 
-winHome = Titanium.UI.createWindow({  
+winHome = Titanium.UI.createWindow({
     title:'New York State Senate',
     barColor:DEFAULT_BAR_COLOR,
     backgroundImage:'img/bg/bglight.jpg',
@@ -33,8 +33,8 @@ opacity:.8
 
 for (var c = 0; c < data.length; c++)
 {
-	
-	
+
+
 	row = Ti.UI.createTableViewRow({height:60});
 	row.className = 'morerow';
 	row.color = '#333333';
@@ -45,12 +45,12 @@ for (var c = 0; c < data.length; c++)
 	row.oltype = data[c].oltype;
 	row.hasDetail =  data[c].hasDetail;
 	row.leftImage = data[c].icon;
-		
+
 	row.title = data[c].title;
-	
+
 	tableview.appendRow(row);
-		
-	
+
+
 }
 
 
@@ -62,17 +62,17 @@ tableview.addEventListener('click', function(e)
 	if (e.rowData.tab)
 	{
 		//Titanium.UI.currentTab.setActiveTab(e.rowData.tab);
-	}	
+	}
 	else if (e.rowData.ilink)
 	{
 		subWin = Titanium.UI.createWindow({
 			url:e.rowData.ilink,
 			title:e.rowData.pageTitle
-			
+
 		});
 
 		subWin.channel = e.rowData.channel;
-	
+
 		subWin.barColor = DEFAULT_BAR_COLOR;
 		subWin.open({animated:true});
 	}
@@ -133,13 +133,13 @@ if (!hadWelcome)
 			winHome.open(winSearch,{animated:true});
 
 		}
-		
+
 		Titanium.App.Properties.setString("welcome","done");
-		
+
 	});
 
 	dialog.show();
-	
-				
+
+
 }
 

@@ -22,8 +22,8 @@ backgroundColor:"#ffffff"
 
 for (var c = 0; c < data.length; c++)
 {
-	
-	
+
+
 	row = Ti.UI.createTableViewRow({height:60});
 	row.className = 'morerow';
 	row.pageTitle = data[c].title;
@@ -33,7 +33,7 @@ for (var c = 0; c < data.length; c++)
 	row.oltype = data[c].oltype;
 	row.hasDetail = true;
 
-		
+
 	var labelTitle = Ti.UI.createLabel({
 		text:data[c].title,
 		left:10,
@@ -43,7 +43,7 @@ for (var c = 0; c < data.length; c++)
 		color:'#000'
 	});
 	row.add(labelTitle);
-	
+
 	var labelTime = Ti.UI.createLabel({
 		text:data[c].summary,
 		left:10,
@@ -52,12 +52,12 @@ for (var c = 0; c < data.length; c++)
 		color:'#333'
 	});
 	row.add(labelTime);
-			
 
-	
+
+
 	tableview.appendRow(row);
-		
-	
+
+
 }
 
 
@@ -66,17 +66,17 @@ var subWin;
 // create table view event listener
 tableview.addEventListener('click', function(e)
 {
-	
+
 	if (e.rowData.ilink)
 	{
 			subWin = Titanium.UI.createWindow({
 				url:e.rowData.ilink,
 				title:e.rowData.pageTitle
-				
+
 			});
 
 			subWin.channel = e.rowData.channel;
-				
+
 			subWin.barColor = DEFAULT_BAR_COLOR;
 			Titanium.UI.currentTab.open(subWin,{animated:true});
 	}

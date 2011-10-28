@@ -19,7 +19,7 @@ var transpColor = '#00ffffff';
 function buildWindow ()
 {
 
-	var win = Titanium.UI.createWindow({  
+	var win = Titanium.UI.createWindow({
 	    backgroundImage:'img/bg/bglight.jpg',
 	    orientationModes:[Titanium.UI.PORTRAIT],
 	    navBarHidden:true
@@ -28,7 +28,7 @@ function buildWindow ()
 	win.addEventListener('android:back',function(e)
 	{
 		Titanium.API.info("got win android:back event");
-			
+
 	});
 
 	win.open({});
@@ -50,7 +50,7 @@ function buildWindow ()
 		});
 	win.add(imgTitle);
 
-	
+
 	var tableview = Titanium.UI.createTableView({
 		separatorColor: transpColor,
 		top:64,
@@ -91,7 +91,7 @@ function buildWindow ()
 
 	for (var i = 0; i < gridData.length; i++)
 	{
-	
+
 		if (gridColIdx == -1 || gridColIdx > 2)
 		{
 			gridRow = Ti.UI.createTableViewRow({
@@ -109,8 +109,8 @@ function buildWindow ()
 		else if (gridColIdx == 1)
 			imgLeft = xCenter;
 		else if (gridColIdx == 2)
-			imgLeft = xRight;	
-	
+			imgLeft = xRight;
+
 		var img = Ti.UI.createImageView({
 			image:gridData[i].image,
 			top:gridIconBuffer,
@@ -133,7 +133,7 @@ function buildWindow ()
 					modal:true
 
 				});
-				
+
 				newWin.close();
 				newWin.open();
 
@@ -141,21 +141,21 @@ function buildWindow ()
 				{
 
 					Titanium.API.info("got android BACK key event for new win");
-					
+
 
 				});
-		
+
 			}
 			else if (e.source.tabIdx)
 			{
-				
-				
+
+
 				var tabWin = Titanium.UI.createWindow({
 					url:"app-tabs.js",
 					orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT],
 					modal:true
 				});
-			
+
 				tabWin.open({});
 
 				tabWin.addEventListener('close',function(e)
@@ -165,9 +165,9 @@ function buildWindow ()
 
 				});
 			}
-	
+
 		});
-		
+
 		gridRow.add(img);
 
 		var imgLabel = Ti.UI.createLabel({
@@ -180,12 +180,12 @@ function buildWindow ()
 			color:gridFontColor
 		});
 		gridRow.add(imgLabel);
-		
+
 		gridColIdx++;
-	
+
 	}
 
-	
+
 	return win;
 }
 
@@ -219,14 +219,14 @@ if (!hadWelcome)
 			win.open(winSearch,{animated:true});
 
 		}
-		
+
 		Titanium.App.Properties.setString("welcome","done");
-		
+
 	});
 
 	dialog.show();
-	
-				
+
+
 }
 
 

@@ -90,63 +90,63 @@ win.add(btnGeo);
 function searchByAddress()
 {
 	Titanium.API.info("starting address search");
-	
-	
+
+
 		var toolActInd = Titanium.UI.createActivityIndicator();
 		toolActInd.style = Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN;
 		toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
 		toolActInd.color = 'white';
 		toolActInd.message = 'Searching by address...';
 		toolActInd.show();
-	
+
 		var valZip = txtZipcode.value;
 		var valAddress = txtAddress.value;
-		
+
 		var searchUrl = "http://nysenatemobile.appspot.com/data/senatorbyaddress.jsp?street=" + escape(valAddress) + "&zip=" + escape(valZip);
-		
+
 		Titanium.API.info("searching: " + valAddress + " " + valZip + ": " + searchUrl);
-		
+
 		var xhr = Ti.Network.createHTTPClient();
 		xhr.setTimeout(30000);
-		
+
 		xhr.onload = function()
 		{
-			
+
 			try
 			{
 								toolActInd.hide();
 				//Titanium.API.info("senator lookup resp: " + this.responseText);
-				
+
 				var senatorKey = this.responseText;
 				senatorKey = senatorKey.replace(/^\s+/, '');
    				senatorKey = senatorKey.replace(/\s+$/, '');
-				
+
 				var senatorItems = getSenatorJSON();
 				var senator;
-				
+
 				for (i = 0; i < senatorItems.length; i++)
 				{
 					//Titanium.API.info("checking senator: " + senatorItems[i].senator.url + "==" + senatorKey);
-					
+
 					if (senatorItems[i].senator.url.indexOf(senatorKey)!=-1)
 					{
 						Titanium.API.info("MATCH!");
-						
+
 						var imageUrl = senatorItems[i].senator.imageUrl;
-	 	
+
 						var idx = imageUrl.lastIndexOf("/");
 						imageUrl = imageUrl.substring(idx+1);
 						senatorItems[i].senator.imageFileName = imageUrl;
 						senatorItems[i].senator.imageUrl = SENATOR_THUMB_BASE + escape(imageUrl);
 						senatorItems[i].senator.imageUrlLarge = SENATOR_FULL_BASE + escape(imageUrl);
-				
+
 						senatorItems[i].senator.district = senatorItems[i].senator.district.split(' ')[3];
-					
+
 						senator = senatorItems[i].senator;
 						break;
 					}
 				}
-				
+
 				if (!senator)
 				{
 						var a = Titanium.UI.createAlertDialog({
@@ -157,9 +157,9 @@ function searchByAddress()
 				}
 				else
 				{
-				
+
 					var senImage = "../../img/senators/" + senator.key + ".jpg";
-				
+
 					var newWin = Titanium.UI.createWindow({
 						url:'senator.js',
 						title:senator.name,
@@ -171,7 +171,7 @@ function searchByAddress()
 						backgroundImage:'../img/bg/wood.jpg'
 
 					});
-						
+
 					Titanium.UI.currentTab.open(newWin,{animated:true});
 				}
 			}
@@ -181,10 +181,10 @@ function searchByAddress()
 				alert("There was an error finding your location.");
 				debug(E);
 			}
-			
-					
+
+
 		};
-		
+
 		xhr.onerror = function ()
 		{
 
@@ -195,11 +195,11 @@ function searchByAddress()
 				});
 				a.show();
 		};
-		
+
 		xhr.open("GET",searchUrl);
 		xhr.send();
-	
-	
+
+
 }
 
 	var longitude = null;
@@ -210,7 +210,7 @@ function searchByAddress()
 	var speed = null;
 	var timestamp  = null;
 	var altitudeAccuracy = null;
-	
+
 		var toolActInd = Titanium.UI.createActivityIndicator();
 		toolActInd.style = Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN;
 		toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
@@ -218,13 +218,13 @@ function searchByAddress()
 		toolActInd.message = 'Finding your location...';
 
 		var locationFound = false;
-		
+
 	function handleLocation (e)
 	{
-			
+
 			toolActInd.hide();
-		
-		
+
+
 			if (e.error)
 			{
 				//currentLocation.text = 'error: ' + JSON.stringify(e.error);
@@ -267,14 +267,14 @@ function searchByAddress()
 				Ti.API.info('>ADR found:'+ gotitems.results[0].formatted_address);
 				adrlabel.text=gotitems.results[0].formatted_address;
 				*/
-		 
+
 			}
-			xhrgeo.send(); 
-			
-				
+			xhrgeo.send();
 
 
-				
+
+
+
 	}
 
 // reverse geo
@@ -291,49 +291,49 @@ function searchByAddress()
 						if (places[n].types[0] == "street_address")
 						{
 							Ti.API.info("got address: " + places[n].formatted_address);
-						
+
 							for (i = 0; i < places[n].address_components.length; i++)
 							{
 								if (places[n].address_components[i].types[0] == "postal_code")
 								{
-								
+
 										txtZipcode.value = places[n].address_components[i].short_name;
 
 								}
 								else if (places[n].address_components[i].types[0] == "street_number")
 								{
-								
+
 										txtAddress.value = places[n].address_components[i].short_name;
 
 								}
 								else if (places[n].address_components[i].types[0] == "route")
 								{
-								
+
 										txtAddress.value += ' ' + places[n].address_components[i].short_name;
 
 								}
-								
-								
-							
+
+
+
 							}
 							searchByAddress();
-							
+
 							break;
 						}
-					
+
 					}
 					//txtZipcode
-					
+
 				//	searchByAddress();
 
 				}
-				
+
 function getGeo ()
 {
-	
+
 		toolActInd.show();
-		
-	
+
+
 	//
 	//  SHOW CUSTOM ALERT IF DEVICE HAS GEO TURNED OFF
 	//
@@ -343,8 +343,8 @@ function getGeo ()
 	}
 	else
 	{
-	
-	
+
+
 
 		//
 		//  SET ACCURACY - THE FOLLOWING VALUES ARE SUPPORTED
@@ -365,8 +365,8 @@ function getGeo ()
 		//
 		//Titanium.Geolocation.distanceFilter = 5;
 
-	
-		
+
+
 		//
 		// EVENT LISTENER FOR GEO EVENTS - THIS WILL FIRE REPEATEDLY (BASED ON DISTANCE FILTER)
 		//
@@ -376,8 +376,8 @@ function getGeo ()
 		{
 			if (!locationFound)
 				handleLocation(e);
-		
-		});*/		
+
+		});*/
 
 //
 		// GET CURRENT POSITION - THIS FIRES ONCE
@@ -389,7 +389,7 @@ function getGeo ()
 
 
 
-	
+
 	}
 
 }
@@ -397,7 +397,7 @@ function getGeo ()
 btnSearch.addEventListener('click',function()
 {
 	searchByAddress();
-	
+
 });
 
 btnGeo.addEventListener('click',function()

@@ -13,7 +13,7 @@ var webModal;
 var webModalView;
 var toolActInd;
 var currentLink;
-		
+
 var btnSearch = Titanium.UI.createButton({
 	title:'Browser',
 	style:Titanium.UI.iPhone.SystemButtonStyle.PLAIN
@@ -22,7 +22,7 @@ var btnSearch = Titanium.UI.createButton({
 btnSearch.addEventListener('click',function()
 {
 	Titanium.Platform.openURL(currentLink);
-	
+
 });
 
 /*
@@ -60,15 +60,15 @@ function getSenatorJSON ()
 	if (!senatorJson)
 	{
 		//Titanium.API.info("loading senators json");
-		
-		
+
+
 		var cachedFeed = getCachedFile("senatorsJson");
 
 		//Titanium.API.info("parsing senators json: " + cachedFeed);
 
 		if (cachedFeed)
 			senatorJson = JSON.parse(cachedFeed.text);
-	 	
+
 	}
 
 	return senatorJson;
@@ -78,107 +78,107 @@ function processNYSenateHtml (rawHTML)
 {
 	var respText = rawHTML;
 	var baseHref = "http://nysenate.gov";
-	
+
 	var contentIdx = respText.indexOf('id="content">');
-	
+
 	if (contentIdx && contentIdx != -1)
 	{
 		respText = respText.substring(contentIdx+13);
-		
+
 		respText = respText.substring(0, respText.indexOf('<!-- /#content-inner') );
-		
+
 		respText = respText.replace("<div>","");
 		respText = respText.replace("</div>","");
 		/*
 		var videoIdIdx = respText.indexOf("http://www.youtube.com/v/");
-		
+
 		if (videoIdIdx !=-1)
 		{
-			
+
 			var vguid = respText.substring(videoIdIdx+25);
 			vguid = vguid.substring(0,vguid.indexOf('&'));
-			
+
 			var thumbPlayer = '<embed id="yt" src="http://www.youtube.com/v/' + vguid + '" type="application/x-shockwave-flash" width="320" height="240"></embed>';
-			
+
 			respText = respText + "<br/>" + thumbPlayer;
-			
+
 		//	Titanium.API.debug("adding youtube player: " + respText);
-			
+
 		}
-		
-		
+
+
 		respText = '<html><head><style>#emvideo-youtube-flash-1, .group-video, object {display:none;} .links, .share_links { display: none;} body {font-family:"Helvetica";} h1, h2{color:#012849;} a:link,a:visited{color:#5E4D42;} .imagecache-full_node_featured_image {width:295px;max-height:161px;}</style><meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;" /> <meta name="apple-mobile-web-app-capable" content="YES"></head><body><base href="' + baseHref + '"/>' + respText + '</body></html>';
 		*/
-	
+
 			respText = '<html><head><style>#emvideo-youtube-flash-1, .group-video, object {display:none;} .links, .share_links { display: none;} body {font-family:"Helvetica";} h1, h2{color:#012849;} a:link,a:visited{color:#5E4D42;} .imagecache-full_node_featured_image {width:295px;max-height:161px;}</style><meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;" /> <meta name="apple-mobile-web-app-capable" content="YES"></head><body><base href="' + baseHref + '"/>' + respText + '</body></html>';
 
 	}
-	
+
 	return respText;
 }
 
 
 function createWebView ()
 {
-	
+
 		webModal = Ti.UI.createWindow({
-			
-			barColor:DEFAULT_BAR_COLOR	
-	
+
+			barColor:DEFAULT_BAR_COLOR
+
 		});
-		
+
 		webModal.orientationModes = [
 			Titanium.UI.PORTRAIT,
 			Titanium.UI.LANDSCAPE_LEFT,
 			Titanium.UI.LANDSCAPE_RIGHT
 		];
-				
-	
+
+
 		webModalView = Ti.UI.createWebView();
 		webModalView.scalesPageToFit = true;
-		
+
 		webModal.add(webModalView);
-		
+
 		if (Titanium.Platform.name == 'iPhone OS')
 		{
 			webModal.rightNavButton = btnSearch;
 		}
-	
-		
-		
+
+
+
 		webModalView.addEventListener('beforeload',function(e)
 		{
-			
+
 			showLoadingDialog("Loading","Loading web content...");
 
 		});
-			
+
 		webModalView.addEventListener('load',function(e)
 		{
 			Ti.API.debug("webview loaded: "+e.url);
-			
+
 			hideLoadingDialog();
 
 		});
-	
+
 		return webModalView;
 }
 
 function showWebModal(wTitle, wUrl)
 {
 		Titanium.API.info("loading modal web view for: " + wUrl);
-		
+
 		currentLink = wUrl;
-		
+
 		createWebView();
-		
+
 		webModal.title = wTitle;
-		
+
 		Titanium.UI.currentTab.open(webModal,{animated:true});
 		webModalView.html = null;
 		webModalView.url = wUrl;
 		webModalView.scalesPageToFit = true;
-		
+
 };
 
 function playYouTube (vtitle, vguid)
@@ -198,102 +198,102 @@ function playYouTube (vtitle, vguid)
 
 function showYouTubeVideo (wTitle, wYouTube)
 {
-	
+
 	var wYouTubeId = wYouTube.substring(wYouTube.indexOf("v=")+2);
-	
+
 	if (wYouTubeId.indexOf("&") != -1)
 	{
 		wYouTubeId = wYouTubeId.substring(0,wYouTubeId.indexOf("&"));
 	}
-	
+
 	Titanium.API.info("loading youtube page: " + wYouTubeId + " / " + wYouTube);
-	
+
 	var youTubePlayer = '<html><body><center><div id="emvideo-youtube-flash-wrapper-1"><object type="application/x-shockwave-flash" height="350" width="425" data="http://www.youtube.com/v/' + wYouTubeId + '&amp;rel=0&amp;fs=1" id="emvideo-youtube-flash-1" allowFullScreen="true"> <param name="movie" value="http://www.youtube.com/v/' + wYouTubeId + '&amp;rel=0&amp;fs=1" />  <param name="allowScriptAcess" value="sameDomain"/>  <param name="quality" value="best"/>  <param name="allowFullScreen" value="true"/>  <param name="bgcolor" value="#FFFFFF"/>  <param name="scale" value="noScale"/> <param name="salign" value="TL"/> <param name="FlashVars" value="playerMode=embedded" /> <param name="wmode" value="transparent" /> <a href="http://www.youtube.com/watch?v=' + wYouTubeId + '">	<img src="http://img.youtube.com/vi/' + wYouTubeId + '/0.jpg" width="480" height="360" alt="[Video title]" />YouTube Video</a></object></div></center></body></html>';
 
 		showHTMLContent(wTitle, '', youTubePlayer);
-	
+
 }
 
 function showHTMLContent(wTitle, wUrl, wHTMLContent)
 {
 	//Titanium.API.debug("loading html web view content: " + wHTMLContent);
-		
+
 		currentLink = wUrl;
-		
+
 		createWebView();
-		
-		
+
+
 		webModal.title = wTitle;
-		
+
 		Titanium.UI.currentTab.open(webModal,{animated:true});
-		
+
 		webModalView.html = wHTMLContent;
-		
-	
+
+
 };
 
 function showNYSenateContent(wTitle, wUrl)
 {
 
 	//Titanium.API.info("loading modal web view for: " + wUrl);
-			
+
 			currentLink = wUrl;
-			
+
 			createWebView();
-			
+
 			webModal.title = wTitle;
 			webModalView.title = wTitle;
 			webModalView.html = "";
-			
+
 			Titanium.UI.currentTab.open(webModal,{animated:true});
-			
+
 		var cFile = null;//getCachedFile(wUrl);
-		
+
 		if (cFile)
 		{
-			
+
 			webModalView.html = processNYSenateHtml(cFile);
-					
+
 			hideLoadingDialog();
 		}
 		else
 		{
-			
-			
+
+
 			var xhr = Ti.Network.createHTTPClient();
 			xhr.setTimeout(30000);
 			xhr.open("GET",wUrl);
-	
+
 			xhr.onload = function()
 			{
-				
+
 				cacheFile(wUrl, this.responseText);
-				
+
 				webModalView.html = processNYSenateHtml(this.responseText);
-					
-				
+
+
 				hideLoadingDialog();
-					
+
 			};
-			
-		
+
+
 			xhr.send();
-	}		
+	}
 };
 
 
 function getCachedFile (cacheUrl)
 {
 
-		
+
 		var filename = Titanium.Utils.md5HexDigest(cacheUrl);
 
 		try
 		{
 		//	Ti.API.debug('looking for cached file md5: ' + filename);
-	
+
 			var f = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,filename);
-			
+
 			if (f)
 			{
 			//	Ti.API.debug('found cached file: ' + f.nativePath);
@@ -306,9 +306,9 @@ function getCachedFile (cacheUrl)
 		{
 			//Ti.API.debug('no cache for: ' + cacheUrl);
 			return null;
-		}	
-		
-		
+		}
+
+
 		return null;
 
 }
@@ -319,61 +319,61 @@ function cacheFile (fileUrl, fileData, fileCallbackFunction)
 	if (fileData)
 	{
 		var filename = Titanium.Utils.md5HexDigest(fileUrl);
-			
+
 			//Ti.API.debug('saving file ' + fileUrl + ' as : ' + filename);
-	
+
 			var f = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,filename);
-			
+
 			f.write(fileData);
-			
+
 			if(fileCallbackFunction)
 				fileCallbackFunction(fileUrl,f);
-	
+
 	}
 	else
 	{
 		var c = Titanium.Network.createHTTPClient();
-		
+
 		c.setTimeout(30000);
-		
+
 		c.onload = function()
 		{
 			var filename = Titanium.Utils.md5HexDigest(fileUrl);
-			
+
 			//Ti.API.info('saving file ' + fileUrl + ' as : ' + filename);
-	
+
 			var f = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,filename);
-			
+
 			f.write(this.responseData);
-			
+
 			if(fileCallbackFunction)
 				fileCallbackFunction(fileUrl,f);
 
 		};
-		
+
 		c.ondatastream = function(e)
 		{
 			//ind.value = e.progress ;
 			//Ti.API.info('ONDATASTREAM1 - PROGRESS: ' + e.progress);
 		};
-		
+
 		c.error = function(e)
 		{
 			//Ti.UI.createAlertDialog({title:'XHR', message:'Error: ' + e.error}).show();
 			//Ti.API.debug('ONDATASTREAM1 - ERROR: ' + e.error);
 		};
-		
+
 		c.open('GET', fileUrl);
-		
+
 		// send the data
 		c.send();
-	}	
+	}
 }
 
 function processHtml (rawHTML)
 {
 
-	rawHTML = rawHTML.replace(/(Related information:)/gi," ");	
+	rawHTML = rawHTML.replace(/(Related information:)/gi," ");
 	rawHTML = rawHTML.replace(/(Authored by Senator:)/gi," ");
 	rawHTML = rawHTML.replace(/(Authored by Senator)/gi," ");
 	rawHTML = rawHTML.replace(/(Feature image:)/gi," ");
@@ -382,7 +382,7 @@ function processHtml (rawHTML)
 	rawHTML = rawHTML.replace(/(File\:)/gi," ");
 	rawHTML = rawHTML.replace(/&lt;p&gt;/gi," ");
 	rawHTML = rawHTML.replace(/&lt;\/p&gt;/gi," ");
-	
+
 	rawHTML=rawHTML.replace(/<br>/gi, " ");
 	rawHTML=rawHTML.replace(/  /gi, " ");
 	rawHTML=rawHTML.replace(/&nbsp;/gi, " ");
@@ -391,26 +391,26 @@ function processHtml (rawHTML)
 	rawHTML=rawHTML.replace(/<a.*href="(.*?)".*>(.*?)<\/a>/gi, "");
 	rawHTML=rawHTML.replace(/<(?:.|\s)*?>/g, "");
 	rawHTML=rawHTML.replace(/^\s*|\s*$/g,'');
-	
+
 	rawHTML = rawHTML.replace(/(\r\n|\n|\r)/gm," ");
-	
+
 	rawHTML = trim(rawHTML);
-	
+
 	return rawHTML;
 }
 
 
 
-function trim(s) 
-{ 
-    var l=0; 
-    var r= s.length-1; 
-    while(l < s.length && s[l] == ' ') 
-    {     l++; } 
-    while(r > l && s[r] == ' ') 
-    {     r-=1;     } 
-    return s.substring(l, r+1); 
-} 
+function trim(s)
+{
+    var l=0;
+    var r= s.length-1;
+    while(l < s.length && s[l] == ' ')
+    {     l++; }
+    while(r > l && s[r] == ' ')
+    {     r-=1;     }
+    return s.substring(l, r+1);
+}
 
 // Simulates PHP's date function
 Date.prototype.format = function(format) {
@@ -431,7 +431,7 @@ Date.replaceChars = {
 	longMonths: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 	shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 	longDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-	
+
 	// Day
 	d: function() { return (this.getDate() < 10 ? '0' : '') + this.getDate(); },
 	D: function() { return Date.replaceChars.shortDays[this.getDay()]; },
@@ -484,28 +484,28 @@ Date.replaceChars = {
 *  http://www.webtoolkit.info/
 *
 **/
- 
+
 var Url = {
- 
+
 	// public method for url encoding
 	encode : function (string) {
 		return escape(this._utf8_encode(string));
 	},
- 
+
 	// public method for url decoding
 	decode : function (string) {
 		return this._utf8_decode(unescape(string));
 	},
- 
+
 	// private method for UTF-8 encoding
 	_utf8_encode : function (string) {
 		string = string.replace(/\r\n/g,"\n");
 		var utftext = "";
- 
+
 		for (var n = 0; n < string.length; n++) {
- 
+
 			var c = string.charCodeAt(n);
- 
+
 			if (c < 128) {
 				utftext += String.fromCharCode(c);
 			}
@@ -518,22 +518,22 @@ var Url = {
 				utftext += String.fromCharCode(((c >> 6) & 63) | 128);
 				utftext += String.fromCharCode((c & 63) | 128);
 			}
- 
+
 		}
- 
+
 		return utftext;
 	},
- 
+
 	// private method for UTF-8 decoding
 	_utf8_decode : function (utftext) {
 		var string = "";
 		var i = 0;
 		var c = c1 = c2 = 0;
- 
+
 		while ( i < utftext.length ) {
- 
+
 			c = utftext.charCodeAt(i);
- 
+
 			if (c < 128) {
 				string += String.fromCharCode(c);
 				i++;
@@ -549,12 +549,12 @@ var Url = {
 				string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
 				i += 3;
 			}
- 
+
 		}
- 
+
 		return string;
 	}
- 
+
 }
 
 //
@@ -568,7 +568,7 @@ function isIPhone3_2_Plus()
 		var version = Titanium.Platform.version.split(".");
 		var major = parseInt(version[0]);
 		var minor = parseInt(version[1]);
-		
+
 		// can only test this support on a 3.2+ device
 		if (major > 3 || (major == 3 && minor > 1))
 		{
@@ -585,7 +585,7 @@ function isiOS4Plus()
 	{
 		var version = Titanium.Platform.version.split(".");
 		var major = parseInt(version[0]);
-		
+
 		// can only test this support on a 3.2+ device
 		if (major >= 4)
 		{
