@@ -33,7 +33,7 @@ var obj = {
 
 // create the hash using secure hash algorithm using 256bit encryption
 obj.hash = HMAC_SHA256_MAC(apikey, obj.domain_time_stamp+";"+obj.domain_name+";"+obj.nonce+";"+drupal_method);
-                 
+
 // this is your view name, be sure your authentication key allows access to views.get
 obj.method = drupal_method;
 

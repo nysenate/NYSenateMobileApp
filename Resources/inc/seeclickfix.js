@@ -108,8 +108,8 @@ win.add(btnGeo);
 function searchByAddress()
 {
 	Titanium.API.info("starting address search");
-	
-	
+
+
 		var toolActInd = Titanium.UI.createActivityIndicator();
 		toolActInd.style = Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN;
 		toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
@@ -117,44 +117,44 @@ function searchByAddress()
 		toolActInd.message = 'Searching by address...';
 		win.setToolbar([toolActInd],{animated:true});
 		toolActInd.show();
-	
+
 		var valZip = txtZipcode.value;
 		var valAddress = txtAddress.value;
-		
+
 		var searchUrl = "http://nysenatemobile.appspot.com/data/senatorbyaddress.jsp?street=" + escape(valAddress) + "&zip=" + escape(valZip);
-		
+
 		Titanium.API.info("searching: " + valAddress + " " + valZip + ": " + searchUrl);
-		
+
 		var xhr = Ti.Network.createHTTPClient();
 		xhr.setTimeout(30000);
-		
+
 		xhr.onload = function()
 		{
-			
+
 			try
 			{
 				Titanium.API.info("senator lookup resp: " + this.responseText);
-				
+
 				var senatorKey = this.responseText;
 				senatorKey = senatorKey.replace(/^\s+/, '');
    				senatorKey = senatorKey.replace(/\s+$/, '');
-				
+
 				var items = getSenatorJSON ().senators;
 				var senator;
-				
+
 				for (i = 0; i < items.length; i++)
 				{
 					//Titanium.API.info("checking senator: " + items[i].key + "==" + senatorKey);
-					
+
 					if (String(items[i].key) == String(senatorKey))
 					{
 						Titanium.API.info("MATCH!");
-						
+
 						senator = items[i];
 						break;
 					}
 				}
-				
+
 				if (!senator)
 				{
 						var a = Titanium.UI.createAlertDialog({
@@ -166,9 +166,9 @@ function searchByAddress()
 				else
 				{
 					Titanium.API.info("parsed senator json");
-				
+
 					var senImage = "../../img/senators/" + senator.key + ".jpg";
-				
+
 					var newWin = Titanium.UI.createWindow({
 						url:'senator.js',
 						title:senator.name,
@@ -182,7 +182,7 @@ function searchByAddress()
 						backgroundImage:'../../img/bg/wood.jpg'
 
 					});
-						
+
 					Titanium.UI.currentTab.open(newWin,{animated:true});
 				}
 			}
@@ -191,11 +191,11 @@ function searchByAddress()
 				//alert("There was an error during lookup.");
 				alert(E);
 			}
-			
+
 					toolActInd.hide();
 					win.setToolbar(null,{animated:true});
 		};
-		
+
 		xhr.onerror = function ()
 		{
 				var a = Titanium.UI.createAlertDialog({
@@ -204,11 +204,11 @@ function searchByAddress()
 				});
 				a.show();
 		};
-		
+
 		xhr.open("GET",searchUrl);
 		xhr.send();
-	
-	
+
+
 }
 
 	var longitude = null;
@@ -219,7 +219,7 @@ function searchByAddress()
 	var speed = null;
 	var timestamp  = null;
 	var altitudeAccuracy = null;
-	
+
 		var toolActInd = Titanium.UI.createActivityIndicator();
 		toolActInd.style = Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN;
 		toolActInd.font = {fontFamily:'Helvetica Neue', fontSize:15,fontWeight:'bold'};
@@ -229,11 +229,11 @@ function searchByAddress()
 
 	function handleLocation (e)
 	{
-			
+
 			toolActInd.hide();
 			win.setToolbar(null,{animated:true});
-		
-		
+
+
 			if (e.error)
 			{
 				//currentLocation.text = 'error: ' + JSON.stringify(e.error);
@@ -267,68 +267,68 @@ function searchByAddress()
 						if (places[n].street)
 						{
 							Ti.API.info("got place street: " + places[n].street);
-						
+
 							Ti.API.info("location: " + places[n].street + ", " + places[n].zipcode);
-								
+
 							txtAddress.value = places[n].street;
 							txtZipcode.value = places[n].zipcode;
-							
+
 							searchByAddress();
-							
+
 							break;
 						}
 						else if (places[n].address)
 						{
-						
+
 							Ti.API.info("got place address: " + places[n].address);
-						
+
 							var address = places[n].address;
 							//15 Warren St, New York, NY 10007, USA
-							
+
 							var addressTokens = address.split(",");
-							
+
 							var street = addressTokens[0];
 							Ti.API.info("got street: " + street);
-								
+
 							var city = trim(addressTokens[1]);
-							
+
 							Ti.API.info("got city: " + city);
-							
+
 							var stateZip = trim(addressTokens[2]).split(" ");
-							
+
 							var state = stateZip[0];
 							Ti.API.info("got state: " + state);
-							
+
 							var zipcode = stateZip[1];
 							Ti.API.info("got zip: " + zipcode);
-							
+
 							Ti.API.info("location: " + street + ", " + zipcode);
-							
+
 							txtAddress.value = street;
 							txtZipcode.value = zipcode;
-							
+
 							searchByAddress();
-							
+
 							break;
 						}
 					}
 					//txtZipcode
-					
+
 				//	searchByAddress();
 
 				});
 
 
-				
+
 	}
-	
+
 function getGeo ()
 {
-	
+
 		win.setToolbar([toolActInd],{animated:true});
 		toolActInd.show();
-		
-	
+
+
 	//
 	//  SHOW CUSTOM ALERT IF DEVICE HAS GEO TURNED OFF
 	//
@@ -338,8 +338,8 @@ function getGeo ()
 	}
 	else
 	{
-	
-	
+
+
 
 		//
 		//  SET ACCURACY - THE FOLLOWING VALUES ARE SUPPORTED
@@ -359,7 +359,7 @@ function getGeo ()
 		//
 		//Titanium.Geolocation.distanceFilter = 10;
 
-	
+
 		//
 		// GET CURRENT POSITION - THIS FIRES ONCE
 		//
@@ -374,10 +374,10 @@ function getGeo ()
 		Titanium.Geolocation.addEventListener('location',function(e)
 		{
 		//	handleLocation(e);
-		
+
 		});
 
-	
+
 	}
 
 }
@@ -385,7 +385,7 @@ function getGeo ()
 btnSearch.addEventListener('click',function()
 {
 	searchByAddress();
-	
+
 });
 
 btnGeo.addEventListener('click',function()

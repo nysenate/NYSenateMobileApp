@@ -7,10 +7,10 @@ Titanium.UI.setBackgroundColor(DEFAULT_BAR_COLOR);
 //
 var win;
 
-win = Titanium.UI.createWindow({  
+win = Titanium.UI.createWindow({
     title:'New York State Senate',
     barColor:DEFAULT_BAR_COLOR,
-    orientationModes:[Titanium.UI.PORTRAIT],  
+    orientationModes:[Titanium.UI.PORTRAIT],
     navBarHidden:true
 });
 
@@ -39,7 +39,7 @@ var data = [
 	{title:'Session Calendar', summary:'', hasDetail:true,ilink:'tabs.js',tabIdx:1,  icon:'img/icons/calendar.png'},
 	{title:'Newsroom', summary:'', hasDetail:true,ilink:'tabs.js',tabIdx:2,  icon:'img/icons/comments.png'},
 	{title:'Open Legislation', summary:'', hasDetail:true,  ilink:'tabs.js',tabIdx:3,  icon:'img/icons/legislation.png'},
-	{title:'Latest Videos', summary:'', hasDetail:true,  ilink:'inc/youtube.js', icon:'img/icons/videos.png'},	
+	{title:'Latest Videos', summary:'', hasDetail:true,  ilink:'inc/youtube.js', icon:'img/icons/videos.png'},
 	{title:'Find Your Senator', summary:'', hasDetail:true,  ilink:'views/findsenator.js', icon:'img/icons/search.png'},
 	{title:'More Information', summary:'', hasDetail:true,  ilink:'tabs.js',tabIdx:4,   icon:'img/icons/more.png'},
 	{title:'Visit NYSenate.gov', summary:'', hasDetail:true, elink:'http://nysenate.gov',  icon:'img/icons/home.png'},
@@ -55,8 +55,8 @@ separatorColor:"#cccccc"
 
 for (var c = 0; c < data.length; c++)
 {
-	
-	
+
+
 	row = Ti.UI.createTableViewRow({height:60, fontSize:'14pt', color:'#333333'});
 	row.pageTitle = data[c].title;
 	row.link =  data[c].link;
@@ -85,10 +85,10 @@ for (var c = 0; c < data.length; c++)
 		color:'#333333'
 	});
 	row.add(labelTitle);
-	
+
 	tableview.appendRow(row);
-		
-	
+
+
 }
 
 
@@ -100,7 +100,7 @@ tableview.addEventListener('click', function(e)
 	if (e.rowData.tab)
 	{
 		//Titanium.UI.currentTab.setActiveTab(e.rowData.tab);
-	}	
+	}
 	else if (e.rowData.ilink)
 	{
 		subWin = Titanium.UI.createWindow({
@@ -115,33 +115,33 @@ tableview.addEventListener('click', function(e)
 		subWin.barColor = DEFAULT_BAR_COLOR;
 		subWin.open({animated:true});
 		subWin.focusCount = 0;
-		
+
 		subWin.addEventListener('focus', function(e)
 		{
 
 			Titanium.API.info("TAB PARENT - got focus");
-			
+
 			subWin.focusCount = subWin.focusCount + 1;
 
 			if (subWin.focusCount > 1)
 				subWin.close();
-			
+
 			//	Ti.API.info("closing curr window");
 			//	Ti.UI.currentWindow.close();
-			
-			
+
+
 		});
 
 		subWin.addEventListener('blur', function(e)
 			{
 				Titanium.API.info("TAB PARENT - got blur");
-	
+
 			});
 
 		subWin.addEventListener('close', function(e)
 			{
 				Titanium.API.info("TAB PARENT - got close");
-	
+
 			});
 
 		subWin.addEventListener('android:back', function(e)
@@ -212,13 +212,13 @@ if (!hadWelcome)
 			win.open(winSearch,{animated:true});
 
 		}
-		
+
 		Titanium.App.Properties.setString("welcome","done");
-		
+
 	});
 
 	dialog.show();
-	
-				
+
+
 }
 

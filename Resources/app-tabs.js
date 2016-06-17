@@ -11,13 +11,13 @@ function showTabs (tabIdx)
 	//
 	var winHome;
 
-	winHome = Titanium.UI.createWindow({  
+	winHome = Titanium.UI.createWindow({
 	    title:'New York State Senate',
 		url:'views/newsroom.js',
 		orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT]
 	});
 
-	var tabHome = Titanium.UI.createTab({  
+	var tabHome = Titanium.UI.createTab({
 	    icon:'img/tabs/bank.png',
 	    title:'Newsroom',
 	    window:winHome,
@@ -30,15 +30,15 @@ function showTabs (tabIdx)
 	//
 	// create controls tab and root window
 	//
-	var winToday = Titanium.UI.createWindow({  
+	var winToday = Titanium.UI.createWindow({
 	    title:'Calendar',
 		url:'views/today.js',
-	 	
+
 	 		backgroundImage:"img/bg/Default.png",
 		orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT]
 
 	});
-	var tabToday = Titanium.UI.createTab({  
+	var tabToday = Titanium.UI.createTab({
 	    icon:'img/tabs/newspaper.png',
 	    title:'Calendar',
 	    window:winToday,
@@ -51,7 +51,7 @@ function showTabs (tabIdx)
 	var winSenators;
 
 
-	winSenators = Titanium.UI.createWindow({  
+	winSenators = Titanium.UI.createWindow({
 			title:'Senators',
 			url:'views/senators.js',
 			barColor:DEFAULT_BAR_COLOR,
@@ -60,57 +60,57 @@ function showTabs (tabIdx)
 	});
 
 
-	var tabSenators = Titanium.UI.createTab({  
+	var tabSenators = Titanium.UI.createTab({
 	    icon:'img/tabs/man.png',
 	    title:'Senators',
 	    window:winSenators
 	});
 
 
-	tabGroup.addTab(tabSenators); 
+	tabGroup.addTab(tabSenators);
 
 	//fourth tab
-	var winOpenLeg = Titanium.UI.createWindow({  
+	var winOpenLeg = Titanium.UI.createWindow({
 	    title:'Legislation',
 		url:'views/legislation.js',
 	 	barColor:DEFAULT_BAR_COLOR,
 	 		backgroundImage:"img/bg/Default.png",
 		orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT]
 	});
-	var tabOpenLeg = Titanium.UI.createTab({  
+	var tabOpenLeg = Titanium.UI.createTab({
 	    icon:'img/tabs/database.png',
 	    title:'Legislation',
 	    window:winOpenLeg
 	});
 
-	tabGroup.addTab(tabOpenLeg); 
+	tabGroup.addTab(tabOpenLeg);
 
 	//fifth tab
-	var winMore = Titanium.UI.createWindow({  
+	var winMore = Titanium.UI.createWindow({
 	    title:'More',
 		url:'views/more.js',
 	 	barColor:DEFAULT_BAR_COLOR,
 	 	backgroundImage:"img/bg/Default.png",
 		orientationModes:[Titanium.UI.LANDSCAPE_LEFT,Titanium.UI.LANDSCAPE_RIGHT,Titanium.UI.PORTRAIT]
 	});
-	var tabMore = Titanium.UI.createTab({  
+	var tabMore = Titanium.UI.createTab({
 	    icon:'img/tabs/preferences.png',
 	    title:'More',
 	    window:winMore
 	});
 
-	tabGroup.addTab(tabMore); 
+	tabGroup.addTab(tabMore);
 
 	tabGroup.addEventListener('blur', function(e)
 	{
 		Titanium.API.info("got tab win blur key event!");
-	
+
 	});
 
 	tabGroup.addEventListener('close',function(e)
 	{
 		Titanium.API.info("got tab win close key event!");
-	
+
 	});
 
 	tabGroup.close();
@@ -130,29 +130,29 @@ Ti.UI.currentWindow.addEventListener('focus', function(e)
 		Titanium.API.info("TAB PARENT - got focus; count=" + focusCount);
 
 		if (focusCount > 1)
-		{ 
+		{
 			Ti.API.info("closing curr window");
 			Ti.UI.currentWindow.close();
 		}
-	
+
 	});
 
 Ti.UI.currentWindow.addEventListener('blur', function(e)
 	{
 		Titanium.API.info("TAB PARENT - got blur");
-	
+
 	});
 
 Ti.UI.currentWindow.addEventListener('close', function(e)
 	{
 		Titanium.API.info("TAB PARENT - got close");
-	
+
 	});
 
 Ti.UI.currentWindow.addEventListener('android:back', function(e)
 	{
 		Titanium.API.info("TAB PARENT - got android:back!");
-	
+
 	});
 
 showTabs(0);

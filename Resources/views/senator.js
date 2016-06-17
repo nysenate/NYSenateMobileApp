@@ -38,14 +38,14 @@ Ti.API.info("got senator image: " + senatorImage);
 
 /*
 var cachedImage = getCachedFile(senatorImage);
-				
+
 	if (!cachedImage)
 	{
 		cacheFile(senatorImage);
 		cachedImage = senatorImage;
 	}
 	*/
-	
+
 var imgSenator = Titanium.UI.createImageView({
 	url:senatorImage,
 	width:85,
@@ -58,14 +58,14 @@ var imgSenator = Titanium.UI.createImageView({
 	borderWidth:5
 });
 
- 
+
 imgSenator.addEventListener('singletap',function(e)
 {
 	var senatorImageFull = senatorImage.replace("files/imagecache/teaser_featured_image/","files/imagecache/full_node_featured_image/" );
 
 	var htmlData = '<html><head><style>.links, .share_links { display: none;} body {margin:0px;padding:0px;font-family:"Helvetica";} h1, h2{color:#012849;} a:link,a:visited{color:#5E4D42;} .imagecache-full_node_featured_image {width:280px;max-height:200px;}</style><meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;" /> <meta name="apple-mobile-web-app-capable" content="YES"></head><body><center><img src="' + senatorImageFull + '" width="100%"/></center></body></html>';
 	showHTMLContent(senatorTitleText,senatorImageFull,htmlData);
-		
+
 });
 
 win.add(imgSenator);
@@ -78,7 +78,7 @@ var messageLabel = Titanium.UI.createLabel({
 	top:40,
 	height:'auto',
 	font:{fontSize:20}
-	
+
 });
 
 win.add(messageLabel);
@@ -90,7 +90,7 @@ if (isiOS4Plus())
 	{
 tdata = [
 	{title:'Contact Information',hasChild:true,link:senatorUrl + "/contact"},
-	{title:'District Map',hasChild:true,title:'District Map',kml:'http://geo.nysenate.gov/maps/kml/sd' + senatorDistrict + '.kml?key=YgiZWjKgealrvSlyDMQRMYEaNLv2fFiz'},	
+	{title:'District Map',hasChild:true,title:'District Map',kml:'http://geo.nysenate.gov/maps/kml/sd' + senatorDistrict + '.kml?key=YgiZWjKgealrvSlyDMQRMYEaNLv2fFiz'},
 	{title:"Newsroom",hasChild:true, rss:senatorUrl+ "/content/feed"},
 	{title:'Sponsored Bills',hasChild:true,olterm:"sponsor:"+legSearchKey + " AND otype:bill AND (oid:S* or oid:A*)"},
 //	{title:'Chaired Meetings',hasChild:true,olterm:"chair:"+legSearchKey + " AND otype:meeting"},
@@ -101,7 +101,7 @@ tdata = [
 else
 {
 	tdata = [
-	{title:'Contact Information',hasChild:true,link:senatorUrl + "/contact",color:"#333333"},	
+	{title:'Contact Information',hasChild:true,link:senatorUrl + "/contact",color:"#333333"},
     {title:'District Map',hasChild:true,title:'District Map',elink:'http://www.nysenate.gov/files/imagecache/district_map/' + senatorDistrict + '_small_0.png',color:"#333333"},
 	{title:"Newsroom",hasChild:true, rss:senatorUrl+ "/content/feed",color:"#333333"},
 	{title:'Sponsored Bills',hasChild:true,olterm:"sponsor:"+legSearchKey + " AND otype:bill AND (oid:S* or oid:A*)",color:"#333333"},
@@ -121,7 +121,7 @@ row.link = twitter;
 tdata[tdata.length] = row;
 
 //tdata[tdata.length] = {title:'Twitter Feed',hasChild:true,link:twitter};
-	
+
 }
 
 
@@ -160,7 +160,7 @@ var subWin;
 // create table view event listener
 tableview.addEventListener('click', function(e)
 {
-	
+
 	if (e.rowData.ilink)
 	{
 			subWin = Titanium.UI.createWindow({
@@ -188,7 +188,7 @@ tableview.addEventListener('click', function(e)
 		});
 
 		subWin.barColor = DEFAULT_BAR_COLOR;
-	
+
 
 		Titanium.UI.currentTab.open(subWin,{animated:true});
 	}
@@ -201,7 +201,7 @@ tableview.addEventListener('click', function(e)
 		});
 
 		subWin.barColor = DEFAULT_BAR_COLOR;
-	
+
 
 		Titanium.UI.currentTab.open(subWin,{animated:true});
 	}
@@ -214,7 +214,7 @@ tableview.addEventListener('click', function(e)
 		});
 
 		subWin.barColor = DEFAULT_BAR_COLOR;
-	
+
 
 		Titanium.UI.currentTab.open(subWin,{animated:true});
 	}
@@ -227,7 +227,7 @@ tableview.addEventListener('click', function(e)
 		});
 
 		subWin.barColor = DEFAULT_BAR_COLOR;
-	
+
 
 		Titanium.UI.currentTab.open(subWin,{animated:true});
 	}

@@ -19,9 +19,9 @@ senatorView = Titanium.UI.createTableView({
 	left:0,
 	separatorColor:"#cccccc",
 	backgroundImage:'../img/bg/bglight.jpg'
-	
+
 });
-	
+
 
 	// click listener - when image is clicked
 	senatorView.addEventListener('click',function(e)
@@ -38,14 +38,14 @@ senatorView = Titanium.UI.createTableView({
 			senatorKey:senatorItems[e.index].senator.name,
 			senatorDistrict:senatorItems[e.index].senator.district,
 			modal:true
-		
+
 		});
 
 		Titanium.UI.currentTab.open(newWin,{animated:true});
-	
+
 	});
 
-	
+
 
 Titanium.UI.currentWindow.add(senatorView);
 
@@ -55,8 +55,8 @@ if (Titanium.Platform.name == 'iPhone OS')
 	var btnSearch = Titanium.UI.createButton({
 		title:'By Address'
 	});
-	
-	
+
+
 	btnSearch.addEventListener('click',function()
 	{
 		var winSearch = Titanium.UI.createWindow({
@@ -64,19 +64,19 @@ if (Titanium.Platform.name == 'iPhone OS')
 			title:'Senator Search',
 			barColor:DEFAULT_BAR_COLOR,
 			backgroundImage:'../img/bg/wood.jpg'
-	
+
 		});
-	
+
 		Titanium.UI.currentTab.open(winSearch,{animated:true});
-	
+
 	});
-			
+
 	Titanium.UI.currentWindow.rightNavButton = btnSearch;
 }
 else
 {
 	var tb1 = null;
-	 
+
 	var menuHandler = function() {
 		tb1.addEventListener('click', function() {
 			var winSearch = Titanium.UI.createWindow({
@@ -90,7 +90,7 @@ else
 
 		});
 	};
-	 
+
 	var activity = Ti.Android.currentActivity;
 	activity.onCreateOptionsMenu = function(e) {
 		var menu = e.menu;
@@ -99,47 +99,47 @@ else
 	};
 
 }
-	
+
 
 function loadSenators()
 {
-	
-	
+
+
 
 	if (senatorItems && senatorItems.length > 0)
 	{
 		//Ti.API.debug("got cached senator items");
-		
+
 			senatorRows = [];
-			
+
 			for (i = 0; i < senatorItems.length; i++)
 			{
 				senatorRows[i] = loadSenatorRow (i, senatorItems[i].senator.name, senatorItems[i].senator.district, senatorItems[i].senator.imageUrl);
-						
+
 			}
-			
+
 			senatorView.data = senatorRows;
 	}
 	else
 	{
-		
-	
-		
+
+
+
 		xhr.onerror = function (e)
 		{
 			Titanium.API.debug("got xhr error: " + e);
-			
+
 			hideLoadingDialog();
-				
+
 			//alert(e);
 			Titanium.UI.createAlertDialog({title:'NY Senate', message:'There was an error accessing the senator data. Please try again later.'}).show();
-			
+
 		};
-		
+
 		xhr.onload = function()
 		{
 		//	Titanium.API.debug("got resp: "  +this.responseText);
-			
+
 
 			cacheFile("senatorsJson",this.responseText);
 
@@ -148,8 +148,8 @@ function loadSenators()
 			hideLoadingDialog();
 
 		}
-		
-		
+
+
 		showLoadingDialog("Loading","Loading Senators...");
 
 		xhr.open("GET",senatorJsonUrl);
@@ -162,22 +162,22 @@ function parseSenatorResponse (responseText)
 {
 
 	senatorItems = JSON.parse('{"data":' + responseText + '}').data;
-		
+
 	//Titanium.API.debug("got senator items: " + senatorItems.length);
 
-	
+
 	for (i = 0; i < senatorItems.length; i++)
 	 {
-	 	
-	 	
+
+
 	 	var imageUrl = senatorItems[i].senator.imageUrl;
-	 	
-		
+
+
 	 	var idx = imageUrl.lastIndexOf("/");
 	 	imageUrl = imageUrl.substring(idx+1);
-	 	
+
 		 senatorItems[i].senator.imageFileName = imageUrl;
-	
+
 		senatorItems[i].senator.imageUrl = "../img/senators/" + escape(senatorItems[i].senator.imageFileName);
 
 		if (senatorItems[i].senator.key == "lanza")
@@ -187,20 +187,20 @@ function parseSenatorResponse (responseText)
 
 
 		//var file = Titanium.Filesystem.getFile(senatorItems[i].senator.imageUrl);
- 
-		//if(!file.exists()) { 
+
+		//if(!file.exists()) {
 		//	senatorItems[i].senator.imageUrl = imageUrl
 		 //}
 
-		
+
 		senatorItems[i].senator.imageUrlLarge = senatorItems[i].senator.imageFileName;
-		
+
 
 		senatorItems[i].senator.district = senatorItems[i].senator.district.split(' ')[3];
 		senatorRows[i] = loadSenatorRow (i, senatorItems[i].senator.name, senatorItems[i].senator.district, senatorItems[i].senator.imageUrl);
 
 		//senatorView.appendRow(senatorRows[i]);
-		
+
 	}
 
 	senatorView.data = senatorRows;
@@ -209,16 +209,16 @@ function parseSenatorResponse (responseText)
 
 function loadSenatorRow (rowIdx, name, district, thumbnail)
 {
-	
+
 	var rowHeight = 70;
-			
+
 	var row = Ti.UI.createTableViewRow({
 		height:rowHeight,
 		color:"#000000",
 		font:{fontSize:18}
 	});
-	
-	
+
+
 	var labelTitle = Ti.UI.createLabel({
 		text:name,
 		left:60,
@@ -228,7 +228,7 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 		font:{fontSize:18}
 	});
 	row.add(labelTitle);
-	
+
 	if (district.length > 0)
 	{
 		var labelSummary = Ti.UI.createLabel({
@@ -240,7 +240,7 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 		});
 		row.add(labelSummary);
 	}
-	
+
 	//Ti.API.debug("loading image: " + thumbnail);
 		var img = Ti.UI.createImageView({
 			image:thumbnail,
@@ -249,17 +249,17 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 			width:55,
 			height:rowHeight
 		});
-		
+
 		row.add(img);
-			
-			
+
+
 	/*
 	var cachedImage = getCachedFile(thumbnail);
-				
+
 	if (!cachedImage)
 	{
 		Ti.API.debug("could not find cached file: " + thumbnail);
-		
+
 		cacheFile(thumbnail,null, function doit(fileUrl, savedFile)
 		{
 			Ti.API.debug("got cache file callback for: " + fileUrl);
@@ -271,13 +271,13 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 				width:55,
 				height:rowHeight
 			});
-		
+
 			row.add(img);
-			
-			
+
+
 			//senatorRows[i].leftImage = savedFile.read();
 			//senatorView.updateRow(i,row);
-			
+
 		});
 	}
 	else
@@ -290,23 +290,23 @@ function loadSenatorRow (rowIdx, name, district, thumbnail)
 			width:55,
 			height:rowHeight
 		});
-		
+
 		row.add(img);
-			
+
 		//row.leftImage = cachedImage;
 		//senatorView.updateRow(i,row);
 	}*/
-	
-	
-		
+
+
+
 	row.hasDetail = true;
-	
-	
+
+
 	return row;
 
 }
-	
-	
+
+
 loadSenators();
 
 /*
